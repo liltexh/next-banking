@@ -27,7 +27,7 @@ function Navbar() {
 							(item) => (
 								<NavigationMenuItem key={item}>
 									<Link
-										href="#"
+										href="about/about-us"
 										className="text-gray-700 hover:text-blue-600 transition"
 									>
 										{item}

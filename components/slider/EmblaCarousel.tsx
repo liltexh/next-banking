@@ -9,6 +9,7 @@ import {
 	usePrevNextButtons,
 } from "./EmblaCarouselArrowButtons";
 import useEmblaCarousel from "embla-carousel-react";
+import { ArrowRight } from "lucide-react";
 
 type PropType = {
 	slides: any;
@@ -38,18 +39,19 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
 				<div className="embla__container">
 					{slides.map((slide: string, index: number) => (
 						<div
-							className="embla__slide p-6 pr-16"
+							className="embla__slide p-1 lg:p-6 pr-16"
 							key={index}
 						>
-							<div className=" bg-white shadow-md">
+							<div className=" bg-white shadow-md  group">
 								<div className="w-full flex flex-col justify-center items-center m-auto relative">
 									<img
-										src="/history-img-03.jpg"
+										src="/wealth-secure-1.jpg"
 										alt=""
-										className="w-full aspect-square object-cover"
+										className="w-full aspect-square object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
 									/>
-									<span className="bg-gradient-to-r from-sky-700 to-sky-600 text-white w-full text-xl absolute bottom-4 -right-10 p-4">
-										lorem iohiwdabn{" "}
+									<span className="bg-gradient-to-r from-sky-700 to-sky-600 flex justify-between text-white w-full text-xl absolute bottom-4 -right-10 p-4">
+										<p>tfvt ygyfgygf</p>
+										<ArrowRight />
 									</span>
 								</div>
 								<div className="w-full flex flex-col justify-center items-center m-auto p-8">

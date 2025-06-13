@@ -44,16 +44,12 @@ const BANK_CATEGORIES: BankCategories[] = [
 		link: "#",
 	},
 ];
-const SlideImages = [
-	"/history-img-04.jpg",
-	"/history-img-03.jpg",
-	"/history-img-02.jpg",
-];
+const SlideImages = ["/slide-v1-3.jpg", "/slide-v1-3.jpg", "/slide-v1-3.jpg"];
 
 function Hero() {
 	const [sIndex, setSIndex] = useState(0);
 	return (
-		<div className="bg-beige-100 pt-32">
+		<div className="bg-beige-100">
 			<section className=" text-white lg:h-dvh main-p">
 				<div className="hidden lg:flex bg-primary-500 py-4 pr-[10%] justify-end items-center text-lg">
 					<p>
@@ -77,7 +73,7 @@ function Hero() {
 									src={SlideImages[sIndex]}
 									alt="#"
 									fill
-									className="relative object-cover"
+									className="relative object-cover grayscale"
 								/>
 							</div>
 						</motion.div>
