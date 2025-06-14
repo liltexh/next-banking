@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Button02 from "./Button02";
-import { ArrowDown, ArrowRight, Search } from "lucide-react";
+import { ArrowRight, Search } from "lucide-react";
 
 type faq = {
 	heading: string;

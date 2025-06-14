@@ -3,7 +3,6 @@ import EmblaCarousel from "./slider/EmblaCarousel";
 import "@/app/styles/EmblaCarousel.css";
 function FeatureSlider() {
 	const OPTIONS: EmblaOptionsType = { loop: true };
-	const SLIDE_COUNT = 5;
 	const SLIDES = [
 		"/history-img-04.jpg",
 		"/history-img-03.jpg",

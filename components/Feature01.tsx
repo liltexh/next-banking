@@ -2,10 +2,10 @@ import React from "react";
 import FeatureSlider from "./FeatureSlider";
 
 type PropType = {
-	className?: String;
+	className?: string;
 };
 
-const Feature01: React.FC<PropType> = (props) => {
+const Feature01: React.FC<PropType> = () => {
 	return (
 		<>
 			<section className="overflow-x-hidden w-full text-center main-py main-p gap">

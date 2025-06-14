@@ -46,23 +46,23 @@ const BRIEF02: ad[] = [
 		prev: "dveve evevev",
 	},
 ];
-const STATEMENT: ad[] = [
-	{
-		image: "/history-img-02.jpg",
-		heading: "lorern jnwifi",
-		prev: "dveve evevev",
-	},
-	{
-		image: "/history-img-02.jpg",
-		heading: "lorern jnwifi",
-		prev: "dveve evevev",
-	},
-	{
-		image: "/history-img-02.jpg",
-		heading: "lorern jnwifi",
-		prev: "dveve evevev",
-	},
-];
+// const STATEMENT: ad[] = [
+// 	{
+// 		image: "/history-img-02.jpg",
+// 		heading: "lorern jnwifi",
+// 		prev: "dveve evevev",
+// 	},
+// 	{
+// 		image: "/history-img-02.jpg",
+// 		heading: "lorern jnwifi",
+// 		prev: "dveve evevev",
+// 	},
+// 	{
+// 		image: "/history-img-02.jpg",
+// 		heading: "lorern jnwifi",
+// 		prev: "dveve evevev",
+// 	},
+// ];
 const ACHIVEMENTS: ad[] = [
 	{
 		image: "/history-img-02.jpg",
@@ -127,7 +127,10 @@ const page = () => {
 					<div className="w-full justify-between flex flex-col lg:flex-row gap-12">
 						{BRIEF.map((b, idx) => {
 							return (
-								<div className="w-full aspect-auto ">
+								<div
+									className="w-full aspect-auto "
+									key={idx}
+								>
 									<span className="relative">
 										<img
 											src={b.image}

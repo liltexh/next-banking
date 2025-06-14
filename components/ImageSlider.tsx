@@ -1,9 +1,9 @@
 import React from "react";
 import EmblaCarousel from "./slider/EmblaCarousel";
+import Link from "next/link";
 import "@/app/styles/EmblaCarousel.css";
 function ImageSlider() {
 	const OPTIONS: EmblaOptionsType = { loop: true };
-	const SLIDE_COUNT = 5;
 	const SLIDES = [
 		"/history-img-04.jpg",
 		"/history-img-03.jpg",
@@ -27,4 +27,4 @@ function ImageSlider() {
 	);
 }
 
-export default Imageslider;
+export default ImageSlider;

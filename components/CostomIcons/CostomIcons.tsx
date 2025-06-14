@@ -1,7 +1,7 @@
 import React from "react";
 
 type PropType = {
-	className?: String;
+	className?: string;
 };
 
 const BackIcon: React.FC<PropType> = (props) => {

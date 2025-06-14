@@ -3,16 +3,9 @@ import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
-import { image } from "motion/react-client";
 import Button02 from "./Button02";
 import Button01 from "./Button01";
 import Button03 from "./Button03";
-import { PrevButton } from "./slider/EmblaCarouselArrowButtons";
-import {
-	ChevronsLeft,
-	ChevronsLeftIcon,
-	ChevronsLeftRight,
-} from "lucide-react";
 import { BackIcon, FowrardIcon } from "./CostomIcons/CostomIcons";
 
 import { Plus } from "lucide-react";
@@ -47,7 +40,7 @@ const BANK_CATEGORIES: BankCategories[] = [
 const SlideImages = ["/slide-v1-3.jpg", "/slide-v1-3.jpg", "/slide-v1-3.jpg"];
 
 function Hero() {
-	const [sIndex, setSIndex] = useState(0);
+	// const [sIndex, setSIndex] = useState(0);
 	return (
 		<div className="bg-beige-100 w-full">
 			<section className=" text-white lg:h-dvh main-p">
@@ -61,7 +54,7 @@ function Hero() {
 				<div className="w-full h-full relative overflow-hidden flex flex-col md:grid md:grid-cols-11 bg-gray-900 md:bg-transparent px-4 gap-y-16 py-6">
 					<AnimatePresence>
 						<motion.div
-							key={SlideImages[sIndex]}
+							key={SlideImages[0]}
 							initial={{ opacity: 0 }}
 							animate={{ opacity: 1 }}
 							exit={{ opacity: 0 }}
@@ -70,7 +63,7 @@ function Hero() {
 						>
 							<div className="w-full h-full bg-gradient-to-r from-transparent to-black/50">
 								<Image
-									src={SlideImages[sIndex]}
+									src={SlideImages[0]}
 									alt="#"
 									fill
 									className="relative object-cover grayscale"

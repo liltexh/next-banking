@@ -4,7 +4,7 @@ import {
 	NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { CardSim, CreditCard, LogIn, Menu } from "lucide-react";
+import { CreditCard, LogIn, Menu } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import Button04 from "./Button04";

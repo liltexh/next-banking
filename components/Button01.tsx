@@ -1,8 +1,8 @@
 import React from "react";
 
 type PropType = {
-	texts: String;
-	className?: String;
+	texts: string;
+	className?: string;
 };
 
 const Button01: React.FC<PropType> = (props) => {

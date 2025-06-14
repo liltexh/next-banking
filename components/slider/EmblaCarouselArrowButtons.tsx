@@ -7,7 +7,6 @@ import React, {
 	useState,
 } from "react";
 import { EmblaCarouselType } from "embla-carousel";
-import { ForwardIcon } from "lucide-react";
 
 type UsePrevNextButtonsType = {
 	prevBtnDisabled: boolean;
