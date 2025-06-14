@@ -49,7 +49,7 @@ const SlideImages = ["/slide-v1-3.jpg", "/slide-v1-3.jpg", "/slide-v1-3.jpg"];
 function Hero() {
 	const [sIndex, setSIndex] = useState(0);
 	return (
-		<div className="bg-beige-100">
+		<div className="bg-beige-100 w-full">
 			<section className=" text-white lg:h-dvh main-p">
 				<div className="hidden lg:flex bg-primary-500 py-4 pr-[10%] justify-end items-center text-lg">
 					<p>

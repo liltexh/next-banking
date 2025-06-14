@@ -42,7 +42,7 @@ const QandA = () => {
 	};
 	return (
 		<section className="main-p main-py w-fit m-auto flex flex-col gap-8 lg:gap-14">
-			<div className="flex flex-col lg:flex-row justify-between items-center text-center w-full px-4 gap-y-3.5 gap-x-20">
+			<div className="flex flex-col lg:flex-row justify-between items-center text-center w-full gap-y-3.5 gap-x-20">
 				<div className="flex flex-col gap-4">
 					<h3 className="text-5xl">Questions & Answers</h3>
 					<p className="text-xl text-black/60">
@@ -51,11 +51,11 @@ const QandA = () => {
 				</div>
 				<div className="flex flex-col gap-4 justify-center items-center lg:items-start">
 					<p className="text-lg font-semibold">Help You to Find</p>
-					<span className="flex  p-4 shadow-lg w-full outline-1 outline-black/5">
+					<span className="flex p-4 gap-7 shadow-lg w-full outline-1 outline-black/5">
 						<input
 							type="text"
 							placeholder="Related Keyword..."
-							className="w-full text-lg min-w-72 outline-none"
+							className="w-full text-lg min-w-64 outline-none"
 						/>
 						<button>
 							<Search />
@@ -76,7 +76,7 @@ const QandA = () => {
 						{FAQ.map((faq, idx: number) => {
 							return (
 								<div
-									className="flex flex-col gap-8 max-w-xl"
+									className="flex flex-col gap-8 min-w-1 max-w-lg"
 									key={idx}
 								>
 									<span
