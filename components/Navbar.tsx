@@ -4,13 +4,14 @@ import {
 	NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
+import { CardSim, CreditCard, LogIn, Menu } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import Button04 from "./Button04";
 
 function Navbar() {
 	return (
-		<nav className="w-full min-h-26 z-50 px-4 py-3 lg:px-8 flex items-center justify-between bg-beige-100">
+		<nav className="w-full min-h-26 z-50 py-3 flex items-center justify-between bg-beige-100 main-p">
 			<div>
 				<Link
 					href="#"
@@ -28,13 +29,21 @@ function Navbar() {
 								<NavigationMenuItem key={item}>
 									<Link
 										href="about/about-us"
-										className="text-gray-700 hover:text-blue-600 transition"
+										className="text-gray-700 hover:text-blue-600 transition text-lg last:mr-8"
 									>
 										{item}
 									</Link>
 								</NavigationMenuItem>
 							)
 						)}
+						<span className="flex gap-2 justify-center items-center">
+							<Button04 className="gap-2 bg-black text-white">
+								<LogIn /> Login
+							</Button04>
+							<Button04 className="gap-2 bg-white">
+								<CreditCard /> Open an Account
+							</Button04>
+						</span>
 					</NavigationMenuList>
 				</NavigationMenu>
 			</div>
