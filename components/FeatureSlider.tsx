@@ -1,5 +1,6 @@
 import React from "react";
 import EmblaCarousel from "./slider/EmblaCarousel";
+import { EmblaOptionsType } from "embla-carousel";
 import "@/app/styles/EmblaCarousel.css";
 function FeatureSlider() {
 	const OPTIONS: EmblaOptionsType = { loop: true };

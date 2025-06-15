@@ -12,7 +12,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import { ArrowRight } from "lucide-react";
 
 type PropType = {
-	slides: [];
+	slides: string[];
 	options?: EmblaOptionsType;
 };
 
