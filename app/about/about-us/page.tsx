@@ -94,7 +94,7 @@ const AWARDS: awards[] = [
 	{ icon: "#", name: "aud", year: "lorem", by: "jbsjc jhbcb " },
 ];
 
-const page = () => {
+const Page = () => {
 	return (
 		<>
 			<SubHero
@@ -298,4 +298,4 @@ const page = () => {
 	);
 };
 
-export default page;
+export default Page;

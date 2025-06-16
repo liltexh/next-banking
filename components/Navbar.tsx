@@ -24,11 +24,11 @@ function Navbar() {
 			<div className="hidden md:flex items-center space-x-6">
 				<NavigationMenu>
 					<NavigationMenuList className="flex space-x-4">
-						{["Plans", "Pricing", "Features", "About", "Contact"].map(
+						{["Plans", "Pricing", "Features", "About", "Get In Touch"].map(
 							(item) => (
 								<NavigationMenuItem key={item}>
 									<Link
-										href="about/about-us"
+										href="/get-in-touch"
 										className="text-gray-700 hover:text-blue-600 transition text-lg last:mr-8"
 									>
 										{item}
@@ -58,7 +58,7 @@ function Navbar() {
 						className="bg-white p-4"
 					>
 						<div className="flex flex-col space-y-2">
-							{["Plans", "Pricing", "Features", "About", "Contact"].map(
+							{["Plans", "Pricing", "Features", "About", "Get In Touch"].map(
 								(item) => (
 									<Link
 										key={item}

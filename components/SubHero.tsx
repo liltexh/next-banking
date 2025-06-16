@@ -9,9 +9,9 @@ type PropType = {
 const SubHero: React.FC<PropType> = (props) => {
 	const { image, texts, className } = props;
 	return (
-		<section className={`bg-beige-100 px-4 ${className}`}>
+		<section className={`bg-beige-100 px-4 main-p  ${className}`}>
 			<div
-				className={`relative w-full h-[40vh] lg:h-50vh flex justify-center items-end`}
+				className={`relative w-full h-[40vh] lg:h-[56vh] flex justify-center items-end`}
 			>
 				<img
 					src={image}
