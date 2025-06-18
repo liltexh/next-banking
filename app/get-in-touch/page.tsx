@@ -52,7 +52,10 @@ const page = () => {
 						<div className="relative flex flex-col items-center justify-center gap-y-14 border border-beige-100 py-14 lg:py-10 bg-white lg:left-24">
 							{QUICK_INFO.map((info, idx: number) => {
 								return (
-									<div className="flex flex-col lg:flex-row gap-4 justify-center items-center text-center lg:text-start">
+									<div
+										className="flex flex-col lg:flex-row gap-4 justify-center items-center text-center lg:text-start"
+										key={idx}
+									>
 										<span className="bg-beige-100 w-16 aspect-square rounded-full flex justify-center items-center">
 											<Map />
 										</span>
@@ -146,23 +149,46 @@ const page = () => {
 					</div>
 				</div>
 			</section>
-			<section>
-				<div>
-					<div>
-						<span>
-							<h5>General Query/Complaint</h5>
+			<section className="w-full main-p main-py flex flex-col">
+				<div className="w-full text-black flex justify-center items-center font-semibold mb-16">
+					<h4 className="text-4xl lg:text-5xl">Customer Care Numbers</h4>
+				</div>
+				<div className="w-fit text-xl bg-white p-4 px-16 shadow-md text-primary-500 font-semibold">
+					Banking
+				</div>
+				<div className="w-full h-[54vh] lg:h-[60vh] shadow-lg bg-white grid grid-cols-2 text-lg">
+					<span className="flex-1 border-r border-b border-black/30 flex-center justify-center pl-6 lg:pl-8 text-center font-semibold">
+						Personal Service
+					</span>
+					<span className="flex-1 border-r flex-center justify-center pl-6 lg:pl-8 border-b border-black/30 font-semibold">
+						Contact Details
+					</span>
+					<span className="flex-1 flex-center border-r border-b border-black/30 pl-6 lg:pl-8">
+						<h5>General Query/Complaint</h5>
+					</span>
+					<span className="flex-1 flex-center flex-col">
+						<span className="flex-1 border-b border-black/30 w-full flex-center pl-6 lg:pl-8">
+							<p>+844-123-4567-89</p>
 						</span>
-						<span>
-							<span>
-								<p>+844-123-4567-89</p>
-							</span>
-							<span>
-								<p>info@example.com</p>
-							</span>
+						<span className="flex-1 flex-center w-full pl-6 lg:pl-8 border-b border-black/30">
+							<p>info@example.com</p>
 						</span>
+					</span>
+					<span className="flex-1 flex-center border-r border-b  border-black/30 pl-6 lg:pl-8">
+						<h5>Credit Card</h5>
+					</span>
+					<span className="flex-1 flex-center flex-col">
+						<span className="flex-1 border-b border-black/30 w-full flex-center pl-6 lg:pl-8">
+							<p>+844-123-4567-89</p>
+						</span>
+						<span className="flex-1 flex-center w-full pl-6 lg:pl-8 border-b border-black/30">
+							<p>info@example.com</p>
+						</span>
+					</span>
+					<div className="flex justify-center items-center text-center col-span-2 w-full h-full font-semibold">
+						<p>To submit your complaint,</p> <span>Click here</span>
 					</div>
 				</div>
-				<div></div>
 			</section>
 		</>
 	);

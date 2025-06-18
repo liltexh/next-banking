@@ -19,7 +19,7 @@ const EXCHANGERATE: excangeRate[] = [
 
 const ForignExchange = () => {
 	return (
-		<section className="bg-black text-white w-full main-p main-py text-center">
+		<section className="bg-black text-white w-full main-p main-py text-center overflow-hidden">
 			<div className="w-full flex flex-col gap-14 mb-20">
 				<div className="flex flex-col justify-center items-center gap-4">
 					<h1 className="text-5xl">Foreign Exchange Rates</h1>

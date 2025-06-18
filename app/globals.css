@@ -97,6 +97,10 @@
 		box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow),
 			var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
 	}
+
+	.flex-center {
+		@apply flex  items-center;
+	}
 }
 
 .dark {

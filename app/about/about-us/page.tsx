@@ -1,3 +1,4 @@
+import QandA from "@/components/QandA";
 import SubHero from "@/components/SubHero";
 import { Group, Home, HomeIcon, Plus } from "lucide-react";
 import Link from "next/link";
@@ -258,7 +259,10 @@ const Page = () => {
 				<div className="flex flex-col gap-8 lg:grid grid-cols-3 grid-rows-2 text-center text-black">
 					{AWARDS.map((award, idx) => {
 						return idx == 1 ? (
-							<div className="row-span-2 relative">
+							<div
+								className="row-span-2 relative"
+								key={idx}
+							>
 								<img
 									src="/images/trophy.png"
 									alt=""
@@ -294,6 +298,7 @@ const Page = () => {
 					})}
 				</div>
 			</section>
+			<QandA />
 		</>
 	);
 };

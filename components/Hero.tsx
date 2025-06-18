@@ -44,13 +44,6 @@ function Hero() {
 	return (
 		<div className="bg-beige-100 w-full">
 			<section className=" text-white lg:h-dvh main-p">
-				<div className="hidden lg:flex bg-primary-500 py-4 pr-[10%] justify-end items-center text-lg">
-					<p>
-						<span className="font-semibold">Updates: {"  "}</span>Get upto 4%*
-						on our Savings Account Balances with Finbank{" "}
-						<Link href="#">More Details</Link>
-					</p>
-				</div>
 				<div className="w-full h-full relative overflow-hidden flex flex-col md:grid md:grid-cols-11 bg-gray-900 md:bg-transparent px-4 gap-y-16 py-6">
 					<AnimatePresence>
 						<motion.div
