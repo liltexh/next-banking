@@ -5,7 +5,7 @@ import Testimonials from "@/components/Testimonials";
 import { Group, Home, HomeIcon, Plus } from "lucide-react";
 import Link from "next/link";
 import React from "react";
-
+import Image from "next/image";
 type ad = {
 	image: string;
 	heading: string;
@@ -21,12 +21,12 @@ type awards = {
 
 const BRIEF: ad[] = [
 	{
-		image: "/history-img-02.jpg",
+		image: "/images/intro-about-1.jpg",
 		heading: "lorern jnwifi",
 		prev: "dveve evevev",
 	},
 	{
-		image: "/history-img-02.jpg",
+		image: "/images/intro-about-2.jpg",
 		heading: "lorern jnwifi",
 		prev: "dveve evevev",
 	},
@@ -102,7 +102,7 @@ const Page = () => {
 		<>
 			<SubHero
 				texts="About Us"
-				image="/history-img-02.jpg"
+				image="/images/aboutUs.jpg"
 			/>
 			<section className="flex flex-col lg:flex-row main-p main-py gap-12">
 				<div className="flex-1 w-full">
