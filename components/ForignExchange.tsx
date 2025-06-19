@@ -1,6 +1,5 @@
 import React from "react";
 import Button01 from "./Button01";
-
 type excangeRate = {
 	icon: string;
 	name: string;
@@ -9,12 +8,12 @@ type excangeRate = {
 };
 
 const EXCHANGERATE: excangeRate[] = [
-	{ icon: "#", name: "usd", send: 63.82, recieve: 53.2 },
-	{ icon: "#", name: "sek", send: 63.82, recieve: 53.2 },
-	{ icon: "#", name: "gbp", send: 63.82, recieve: 53.2 },
-	{ icon: "#", name: "jpy", send: 63.82, recieve: 53.2 },
-	{ icon: "#", name: "aud", send: 63.82, recieve: 53.2 },
-	{ icon: "#", name: "cad", send: 63.82, recieve: 53.2 },
+	{ icon: "/images/flag-1.png", name: "usd", send: 63.82, recieve: 53.2 },
+	{ icon: "/images/flag-2.png", name: "sek", send: 63.82, recieve: 53.2 },
+	{ icon: "/images/flag-3.png", name: "gbp", send: 63.82, recieve: 53.2 },
+	{ icon: "/images/flag-4.png", name: "jpy", send: 63.82, recieve: 53.2 },
+	{ icon: "/images/flag-5.png", name: "aud", send: 63.82, recieve: 53.2 },
+	{ icon: "/images/flag-6.png", name: "cad", send: 63.82, recieve: 53.2 },
 ];
 
 const ForignExchange = () => {
@@ -47,10 +46,11 @@ const ForignExchange = () => {
 						>
 							<div>
 								<img
-									src="/history-img-02.jpg"
+									src={rate.icon}
 									alt=""
 									className="w-14 aspect-square rounded-full border-2 border-white/30 mx-auto mb-2.5 object-cover"
 								/>
+
 								<p className="text-xl">{rate.name}</p>
 							</div>
 							<div className="w-full bg-white/10 text-lg text-white/60">

@@ -1,5 +1,7 @@
+import ManagementTeam from "@/components/ManagementTeam";
 import QandA from "@/components/QandA";
 import SubHero from "@/components/SubHero";
+import Testimonials from "@/components/Testimonials";
 import { Group, Home, HomeIcon, Plus } from "lucide-react";
 import Link from "next/link";
 import React from "react";
@@ -298,6 +300,8 @@ const Page = () => {
 					})}
 				</div>
 			</section>
+			<Testimonials />
+			<ManagementTeam />
 			<QandA />
 		</>
 	);

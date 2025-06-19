@@ -66,9 +66,9 @@ const QandA = () => {
 			<div className="flex flex-col lg:flex-row gap-10">
 				<div className="flex-1">
 					<img
-						src="/faq-style1__image.jpg"
+						src="/images/faq-style1__image.jpg"
 						alt=""
-						className="w-full object-cover aspect-auto"
+						className="w-full object-cover aspect-auto grayscale"
 					/>
 				</div>
 				<div className="flex-1">

@@ -8,9 +8,20 @@ import { CreditCard, LogIn, Menu } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import Button04 from "./Button04";
+import { link } from "fs";
 {
 	/*please remember to make the logo icon dynamic*/
 }
+type navigationRoute = {
+	name: string;
+	link: string;
+};
+const NAVIGATION_ROUTES: navigationRoute[] = [
+	{ name: "Banking", link: "#" },
+	{ name: "About", link: "/about/about-us" },
+	{ name: "Get In Touch", link: "/get-in-touch" },
+	{ name: "Lending", link: "#" },
+];
 function Navbar() {
 	return (
 		<nav className="relative w-full min-h-26 z-50 pt-3 flex flex-col justify-center bg-beige-100 main-p mb-1 lg:mb-0">
@@ -26,18 +37,16 @@ function Navbar() {
 			<div className="hidden xl:flex items-center space-x-6 ml-auto py-8">
 				<NavigationMenu>
 					<NavigationMenuList className="flex space-x-4">
-						{["Plans", "Pricing", "Features", "About", "Get In Touch"].map(
-							(item) => (
-								<NavigationMenuItem key={item}>
-									<Link
-										href="/get-in-touch"
-										className="text-gray-700 hover:text-blue-600 transition text-lg last:mr-8"
-									>
-										{item}
-									</Link>
-								</NavigationMenuItem>
-							)
-						)}
+						{NAVIGATION_ROUTES.map((item, idx: number) => (
+							<NavigationMenuItem key={idx}>
+								<Link
+									href={item.link}
+									className="relative text-gray-700 hover:text-primary-500 transition text-lg font-semibold  last:mr-8 active:text-primary-500 animate-underline after:border-primary-500"
+								>
+									{item.name}
+								</Link>
+							</NavigationMenuItem>
+						))}
 						<span className="flex gap-2 justify-center items-center">
 							<Button04 className="gap-2 bg-black text-white">
 								<LogIn /> Login
@@ -57,20 +66,21 @@ function Navbar() {
 					</SheetTrigger>
 					<SheetContent
 						side="left"
-						className="bg-white p-4"
+						className="bg-primary-500 p-4 border-r border-black text-white w-[60%]"
 					>
+						<div className="w-full h-[20%]">Extra logo</div>
 						<div className="flex flex-col space-y-2">
-							{["Plans", "Pricing", "Features", "About", "Get In Touch"].map(
-								(item) => (
+							{NAVIGATION_ROUTES.map((item, idx: number) => (
+								<span className="py-2 border-t border-white/30  last:border-b last:pb-4">
 									<Link
-										key={item}
-										href="#"
-										className="text-gray-700 hover:text-blue-600 transition"
+										key={idx}
+										href={item.link}
+										className="relative after:absolute after:content-[''] after:block after:w-0 after:border-b after:border-white after:h-0.5 after:mt-1 hover:after:w-full after:transition-all after:duration-300 active:text-primary-600 active:after:border-primary-600"
 									>
-										{item}
+										{item.name}
 									</Link>
-								)
-							)}
+								</span>
+							))}
 						</div>
 					</SheetContent>
 				</Sheet>

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
@@ -9,13 +9,18 @@ import Button03 from "./Button03";
 import { BackIcon, FowrardIcon } from "./CostomIcons/CostomIcons";
 
 import { Plus } from "lucide-react";
-type BankCategories = {
+type bankCategories = {
 	type: string;
 	heading: string;
 	preview: string;
 	link: string;
 };
-const BANK_CATEGORIES: BankCategories[] = [
+type heroContext = {
+	image: string;
+	header: string;
+	paragraph: string;
+};
+const BANK_CATEGORIES: bankCategories[] = [
 	{
 		type: "Fixed Deposit",
 		heading: "Fixed Returns with Peace of Mind",
@@ -37,43 +42,111 @@ const BANK_CATEGORIES: BankCategories[] = [
 		link: "#",
 	},
 ];
-const SlideImages = ["/slide-v1-3.jpg", "/slide-v1-3.jpg", "/slide-v1-3.jpg"];
+const HeroContext: heroContext[] = [
+	{
+		image: "/images/hero01.jpg",
+		header: "An Innovative Framework For Your Financial Solutions",
+		paragraph:
+			"Weakness of will which is the same as thier duty through saying through shrinking from toil",
+	},
+	{
+		image: "/images/hero02.jpg",
+		header: "Banking Made Easy ,More Secure & More Personal",
+
+		paragraph:
+			"Weakness of will which is the same as thier duty through saying through shrinking from toil",
+	},
+	{
+		image: "/images/hero03.jpg",
+		header: "Bank With The Happiest Customers In The World",
+		paragraph:
+			"Weakness of will which is the same as thier duty through saying through shrinking from toil",
+	},
+];
 
 function Hero() {
-	// const [sIndex, setSIndex] = useState(0);
+	const [sIndex, setSIndex] = useState(0);
+	const [animateOut, setAnimateOut] = useState(false);
+	const swapHeroImg = (action: string) => {
+		let numb = sIndex;
+		action == "back" ? numb-- : numb++;
+		if (numb > HeroContext.length - 1) {
+			setSIndex(0);
+		} else if (numb < 0) {
+			setSIndex(HeroContext.length - 1);
+		} else {
+			setSIndex(numb);
+		}
+		setAnimateOut(true);
+	};
+
+	useEffect(() => {
+		setAnimateOut(true);
+		setTimeout(() => {
+			setAnimateOut(false);
+		}, 200);
+	}, []);
 	return (
 		<div className="bg-beige-100 w-full">
 			<section className=" text-white lg:h-dvh main-p">
 				<div className="w-full h-full relative overflow-hidden flex flex-col md:grid md:grid-cols-11 bg-gray-900 md:bg-transparent px-4 gap-y-16 py-6">
 					<AnimatePresence>
 						<motion.div
-							key={SlideImages[0]}
+							key={HeroContext[sIndex].header}
 							initial={{ opacity: 0 }}
 							animate={{ opacity: 1 }}
 							exit={{ opacity: 0 }}
-							transition={{ duration: 0.6 }}
+							transition={{ duration: 0.1 }}
 							className="absolute inset-0 z-0 hidden md:flex "
 						>
-							<div className="w-full h-full bg-gradient-to-r from-transparent to-black/50">
+							<motion.div
+								initial={{ scale: 1 }}
+								animate={{ scale: 1.1 }}
+								exit={{ scale: 1 }}
+								transition={{ duration: 3 }}
+								className="w-full h-full bg-gradient-to-r from-transparent to-black"
+							>
 								<Image
-									src={SlideImages[0]}
+									src={HeroContext[sIndex].image}
 									alt="#"
 									fill
-									className="relative object-cover grayscale"
+									className="object-cover grayscale"
 								/>
-							</div>
+							</motion.div>
 						</motion.div>
 					</AnimatePresence>
-					<div className="flex flex-col gap-12 md:col-span-7 md:order-2 md:w-[90%] my-auto bg-black/20 backdrop-blur-sm  shadow-white/30 shadow-inner p-8 ">
-						<h3 className="text-5xl md:text-7xl">
-							An Innovative Framework for Your Financial solution
-						</h3>
-						<p className="text-xl opacity-75">
-							Weakness of will , which is the same as thier duty through saying
-							through shrinking from toil
-						</p>
-						<Button02 texts={"Make An Appointment"} />
-					</div>
+					<motion.div
+						key={HeroContext[sIndex].header}
+						initial={false}
+						className="flex flex-col gap-8 lg:gap-6 md:col-span-7 md:order-2 md:w-[90%] my-auto bg-black/20 backdrop-blur-sm  shadow-white/30 shadow-inner p-8 overflow-hidden "
+					>
+						<motion.h3
+							initial={{ y: -80, opacity: 0 }}
+							animate={{ y: 0, opacity: 1 }}
+							exit={{ y: -80 }}
+							transition={{ duration: 1 }}
+							className="relative text-5xl md:text-7xl"
+						>
+							{HeroContext[sIndex].header}
+						</motion.h3>
+						<motion.p
+							initial={{ x: 200 }}
+							animate={{ x: 0 }}
+							exit={{ x: 200 }}
+							transition={{ duration: 1 }}
+							className="text-xl opacity-75"
+						>
+							{HeroContext[sIndex].paragraph}
+						</motion.p>
+						<motion.span
+							initial={{ y: 160, opacity: 0 }}
+							animate={{ y: 0, opacity: 1 }}
+							exit={{ y: 160 }}
+							transition={{ duration: 2 }}
+						>
+							<Button02 texts={"Make An Appointment"} />
+						</motion.span>
+					</motion.div>
 					<div className="flex gap-4 col-span-4 items-end relative z-20">
 						<div className="flex flex-col gap-2.5 text-center">
 							<Button01
@@ -85,33 +158,51 @@ function Hero() {
 								className="bg-primary-500 hover:scale-95 transition-all duration-200 text-white/80"
 							/>
 						</div>
-						<div className="hidden lg:flex gap-2.5">
-							<Button03 className="group hover:bg-primary-500 transition-colors duration-500">
+						<div className="flex gap-2.5">
+							<Button03
+								className="group hover:bg-primary-500 transition-colors duration-500"
+								doClick={() => {
+									swapHeroImg("back");
+								}}
+							>
 								<BackIcon className="text-black w-10 group-hover:text-white" />
 							</Button03>
-							<Button03 className="group hover:bg-primary-500 transition-colors duration-500">
+							<Button03
+								className="group hover:bg-primary-500 transition-colors duration-500"
+								doClick={() => {
+									swapHeroImg("next");
+								}}
+							>
 								<FowrardIcon className="text-black w-10 group-hover:text-white" />
 							</Button03>
 						</div>
 					</div>
 				</div>
 			</section>
-			<section className="flex flex-col text-center main-p main-py">
+			<section className="flex flex-col text-center main-p main-py gap-12">
 				<div className="w-full flex flex-col justify-center items-center gap-4">
 					<h1 className="text-5xl font-semibold">Bank for a Better Tomorrow</h1>
 					<p className="text-xl text-black/70 px-8">
 						Committed to helping our customers succeed.
 					</p>
 				</div>
-				<div className="flex flex-col lg:flex-row gap-y-10 my-10">
+				<div className="flex flex-col md:grid md:grid-cols-2 gap-y-16 my-10">
 					{BANK_CATEGORIES.map((categorie, idx) => {
 						return (
 							<div
-								className="flex flex-col justify-center items-center gap-y-16"
+								className="relative flex flex-col justify-center items-center gap-y-12 z-0 last:col-span-2 m-auto"
 								key={idx}
 							>
 								<div className="flex flex-col gap-4 justify-center items-center">
-									<span>{idx + 1}</span>
+									<span className="relative flex justify-center items-start text-2xl font-semibold text-black/30 mb-2 z-0 w-40 aspect-square pt-10">
+										<Image
+											src="/images/counting-box-bg.png"
+											alt=""
+											fill
+											className="absolute top-0 w-full h-full object-contain -z-10"
+										/>
+										0{idx + 1}
+									</span>
 									<span className="text-primary-500 text-xl">
 										{categorie.type}
 									</span>
@@ -119,14 +210,33 @@ function Hero() {
 									<p className="text-black/50 px-10">{categorie.preview}</p>
 								</div>
 								<div>
-									<button className="text-xl flex justify-evenly items-end gap-2">
-										<Link href={categorie.link}>Read More</Link>
-										<Plus
-											className="w-4.5"
-											strokeWidth={3}
-										/>
+									<button className="text-lg flex justify-evenly items-center gap-1.5 hover:text-primary-500 group transition-colors duration-300">
+										<Link
+											href={categorie.link}
+											className="-translate-y-0.5"
+										>
+											Read More
+										</Link>
+										<span className="relative w-8 aspect-square rounded-full z-0 overflow-hidden flex justify-center items-center after:absolute after:-z-10 after:bg-primary-500 after:w-0 after:h-0 after:rounded-full group-hover:text-white group-hover:after:w-full group-hover:after:h-full after:transition-all after:duration-300">
+											<Plus
+												className="w-4 group-hover:rounded-full"
+												strokeWidth={3}
+											/>
+										</span>
 									</button>
 								</div>
+								<span className="absolute bottom-0 left-0 -z-10">
+									<img
+										src="/images/petal01.png"
+										alt=""
+										className="h-48 aspect-auto translate-y-4"
+									/>
+									<img
+										src="/images/petal02.png"
+										alt=""
+										className="w-48 aspect-auto rotate-[14deg] translate-x-10"
+									/>
+								</span>
 							</div>
 						);
 					})}
