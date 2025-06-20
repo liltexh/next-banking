@@ -1,3 +1,4 @@
+import SubNav from "@/components/SubNav";
 import React from "react";
 
 function layout({
@@ -5,7 +6,12 @@ function layout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	return <div className="py-0">{children}</div>;
+	return (
+		<div className="py-0">
+			<SubNav />
+			{children}
+		</div>
+	);
 }
 
 export default layout;
