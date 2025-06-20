@@ -1,16 +1,11 @@
 import React from "react";
-import Navbar from "@/components/Navbar";
+
 function layout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	return (
-		<div className="py-0">
-			<Navbar />
-			{children}
-		</div>
-	);
+	return <div className="py-0">{children}</div>;
 }
 
 export default layout;

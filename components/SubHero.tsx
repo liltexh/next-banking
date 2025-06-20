@@ -8,7 +8,7 @@ import Link from "next/link";
 import React from "react";
 
 type PropType = {
-	image: string;
+	image?: string;
 	texts: string;
 	className?: string;
 };

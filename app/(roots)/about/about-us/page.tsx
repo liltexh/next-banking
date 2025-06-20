@@ -23,12 +23,12 @@ const BRIEF: ad[] = [
 	{
 		image: "/images/intro-about-1.jpg",
 		heading: "lorern jnwifi",
-		prev: "dveve evevev",
+		prev: "Over Four Decades Of Banking",
 	},
 	{
 		image: "/images/intro-about-2.jpg",
 		heading: "lorern jnwifi",
-		prev: "dveve evevev",
+		prev: "Passion & Professional Management",
 	},
 ];
 
@@ -104,16 +104,16 @@ const Page = () => {
 				texts="About Us"
 				image="/images/aboutUs.jpg"
 			/>
-			<section className="flex flex-col lg:flex-row main-p main-py gap-12">
-				<div className="flex-1 w-full">
+			<section className="flex flex-col lg:grid lg:grid-cols-2 main-p main-py gap-12">
+				<div className="border flex justify-center items-center">
 					<img
-						src="/wealth-secure-1.jpg"
+						src="/images/skyscrapper.png"
 						alt=""
-						className="w-full"
+						className="w-full h-full object-contain"
 					/>
 				</div>
-				<div className="flex-1 px-4 text-black/60">
-					<div className="flex flex-col gap-8 mb-8">
+				<div className="px-4 text-black/60">
+					<div className="flex flex-col gap-6 mb-8">
 						<h3 className="text-5xl font-semibold text-black">
 							Known for Trust, Honesty & Customer Support
 						</h3>
@@ -127,11 +127,11 @@ const Page = () => {
 							do what we like best every pleasure is to be welcomed.
 						</p>
 					</div>
-					<div className="w-full justify-between flex flex-col lg:flex-row gap-12">
+					<div className="w-full flex justify-start flex-col lg:flex-row gap-12">
 						{BRIEF.map((b, idx) => {
 							return (
 								<div
-									className="w-full aspect-auto "
+									className="w-full aspect-auto lg:max-w-64"
 									key={idx}
 								>
 									<span className="relative">

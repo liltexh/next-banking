@@ -102,8 +102,19 @@
 		@apply flex  items-center;
 	}
 
+	.main-h4-01 {
+		@apply text-5xl font-semibold;
+	}
+	.main-p-01 {
+		@apply text-black/50 text-lg;
+	}
+
 	.animate-underline {
 		@apply after:absolute after:content-[''] after:block after:w-0 after:border-b  after:h-0.5 after:mt-1 hover:after:w-full after:transition-all after:duration-300;
+	}
+
+	.account-p {
+		@apply text-lg p-4 pl-0 border-b-2 border-black/30 last:border-0;
 	}
 }
 

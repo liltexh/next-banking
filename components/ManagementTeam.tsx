@@ -8,42 +8,42 @@ type tst = {
 
 const TEAMS: tst[] = [
 	{
-		image: "/images/statements-2.jpg",
+		image: "/images/team-v1-1.jpg",
 		name: "diji hsihis iscjsicjhi",
 		position: "yfbvwuf uwfhfuih",
 	},
 	{
-		image: "/images/statements-2.jpg",
+		image: "/images/team-v1-3.jpg",
 		name: "diji hsihis iscjsicjhi",
 		position: "yfbvwuf uwfhfuih",
 	},
 	{
-		image: "/images/statements-2.jpg",
+		image: "/images/team-v1-4.jpg",
 		name: "diji hsihis iscjsicjhi",
 		position: "yfbvwuf uwfhfuih",
 	},
 	{
-		image: "/images/statements-2.jpg",
+		image: "/images/team-v1-5.jpg",
 		name: "diji hsihis iscjsicjhi",
 		position: "yfbvwuf uwfhfuih",
 	},
 	{
-		image: "/images/statements-2.jpg",
+		image: "/images/team-v1-6.jpg",
 		name: "diji hsihis iscjsicjhi",
 		position: "yfbvwuf uwfhfuih",
 	},
 	{
-		image: "/images/statements-2.jpg",
+		image: "/images/team-v1-7.jpg",
 		name: "diji hsihis iscjsicjhi",
 		position: "yfbvwuf uwfhfuih",
 	},
 	{
-		image: "/images/statements-2.jpg",
+		image: "/images/team-v1-8.jpg",
 		name: "diji hsihis iscjsicjhi",
 		position: "yfbvwuf uwfhfuih",
 	},
 	{
-		image: "/images/statements-2.jpg",
+		image: "/images/team-v1-1.jpg",
 		name: "diji hsihis iscjsicjhi",
 		position: "yfbvwuf uwfhfuih",
 	},
@@ -51,7 +51,11 @@ const TEAMS: tst[] = [
 
 function ManagementTeam() {
 	return (
-		<section className="main-p main-py bg-beige-100">
+		<section className="main-p main-py bg-beige-100 flex flex-col gap-16">
+			<div className="text-center m-auto">
+				<h4 className="main-h4-01 mb-4">Our Management Team</h4>
+				<p className="main-p-01">Team of diverse and talented leaders.</p>
+			</div>
 			<div className="w-full flex flex-col lg:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
 				{TEAMS.map((team, idx: number) => {
 					return (
@@ -66,7 +70,7 @@ function ManagementTeam() {
 								<img
 									src={team.image}
 									alt=""
-									className="w-full h-full object-cover"
+									className="w-full h-full object-cover grayscale"
 								/>
 							</span>
 							<span className="w-full flex flex-col justify-center items-center">
