@@ -17,7 +17,7 @@ type navigationRoute = {
 	link: string;
 };
 const NAVIGATION_ROUTES: navigationRoute[] = [
-	{ name: "Banking", link: "#" },
+	{ name: "Banking", link: "/banking" },
 	{ name: "About", link: "/about/about-us" },
 	{ name: "Get In Touch", link: "/get-in-touch" },
 	{ name: "Lending", link: "#" },
