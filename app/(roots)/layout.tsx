@@ -1,4 +1,6 @@
 import React from "react";
+import "@radix-ui/themes/styles.css";
+import { Theme } from "@radix-ui/themes";
 import Navbar from "@/components/Navbar";
 function layout({
 	children,
@@ -6,10 +8,12 @@ function layout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<div className="py-0">
-			<Navbar />
-			{children}
-		</div>
+		<Theme>
+			<div className="py-0">
+				<Navbar />
+				{children}
+			</div>
+		</Theme>
 	);
 }
 
