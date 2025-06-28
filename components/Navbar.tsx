@@ -14,7 +14,6 @@ import { CreditCard, LogIn, Menu } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import Button04 from "./Button04";
-import { link } from "fs";
 {
 	/*please remember to make the logo icon dynamic*/
 }
@@ -30,7 +29,7 @@ const NAVIGATION_ROUTES: navigationRoute[] = [
 ];
 function Navbar() {
 	return (
-		<nav className="relative w-full min-h-26 z-50 pt-3 flex flex-col justify-center bg-beige-100 main-p mb-1 lg:mb-0">
+		<nav className="relative w-full min-h-26 z-50 pt-3 flex flex-col justify-center bg-beige-100 main-p">
 			<div className="absolute bottom-0 left-4 lg:left-32 bg-gradient-to-r from-primary-600 to-primary-500 text-white w-[250px] h-[176px] flex justify-center items-center">
 				<Link
 					href="#"
@@ -57,9 +56,11 @@ function Navbar() {
 							<Button04 className="gap-2 bg-black text-white">
 								<LogIn /> Login
 							</Button04>
-							<Button04 className="gap-2 bg-white">
-								<CreditCard /> Open an Account
-							</Button04>
+							<Link href="/banking">
+								<Button04 className="gap-2 bg-white">
+									<CreditCard /> Open an Account
+								</Button04>
+							</Link>
 						</span>
 					</NavigationMenuList>
 				</NavigationMenu>

@@ -131,16 +131,16 @@ const Page = () => {
 						{BRIEF.map((b, idx) => {
 							return (
 								<div
-									className="w-full aspect-auto lg:max-w-64"
+									className="w-full aspect-auto md:max-h-48"
 									key={idx}
 								>
 									<span className="relative">
 										<img
 											src={b.image}
 											alt=""
-											className="w-full h-full object-cover"
+											className="w-full h-full object-cover "
 										/>
-										<p className="absolute bottom-4 -right-6 bg-white text-primary-500 text-lg shadow-md p-4 px-8">
+										<p className="absolute bottom-4 -right-6 bg-white text-primary-500 shadow-md p-4 px-8">
 											{b.heading}
 										</p>
 									</span>

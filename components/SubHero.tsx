@@ -15,7 +15,7 @@ type PropType = {
 const SubHero: React.FC<PropType> = (props) => {
 	const { image, texts, className } = props;
 	return (
-		<section className={`bg-beige-100 px-4 main-p  ${className}`}>
+		<section className={`bg-beige-100 px-4 main-p pt-1 md:pt-0  ${className}`}>
 			<div
 				className={`relative w-full h-[40vh] lg:h-[56vh] flex justify-center items-end lg:justify-start lg:items-center main-p`}
 			>

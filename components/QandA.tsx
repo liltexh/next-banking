@@ -88,7 +88,7 @@ const QandA = () => {
 											addQuestionActive(idx);
 										}}
 									>
-										<span className="flex gap-4">
+										<span className="flex justify-center items-center gap-4">
 											<span
 												className={`transition-all duration-500 ${
 													questionIdx == idx && "rotate-90"

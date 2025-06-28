@@ -11,6 +11,7 @@ type accountOption = {
 	maintainanceFee: string;
 	beneficts: string;
 	intrest: number;
+	link: string;
 };
 
 type steps = {
@@ -29,6 +30,7 @@ const ACCOUNT_OPTIONS: accountOption[] = [
 		maintainanceFee: "0",
 		beneficts: "Earn interest on your savings, no monthly fees.",
 		intrest: 1.5,
+		link: "access/registration/offers/process?type=savings",
 	},
 	{
 		header: "Flexible Daily Transactions",
@@ -38,6 +40,7 @@ const ACCOUNT_OPTIONS: accountOption[] = [
 		maintainanceFee: "10",
 		beneficts: "Unlimited transactions, debit card access.",
 		intrest: 0,
+		link: "access/registration/offers/process?type=checkings",
 	},
 	{
 		header: "Fixed Rate Savings Plan",
@@ -47,6 +50,7 @@ const ACCOUNT_OPTIONS: accountOption[] = [
 		maintainanceFee: "0",
 		beneficts: "Higher interest rates than regular savings accounts.",
 		intrest: 2.5,
+		link: "access/registration/offers/process?type=fixed",
 	},
 	{
 		header: "Shared Expenses Management",
@@ -57,6 +61,7 @@ const ACCOUNT_OPTIONS: accountOption[] = [
 		maintainanceFee: "5",
 		beneficts: "Manage shared expenses easily.",
 		intrest: 0.5,
+		link: "access/registration/offers/process?type=joint",
 	},
 	{
 		header: "Business Financial Management",
@@ -66,6 +71,7 @@ const ACCOUNT_OPTIONS: accountOption[] = [
 		maintainanceFee: "20",
 		beneficts: "Business transactions, payroll services.",
 		intrest: 0.1,
+		link: "access/registration/offers/process?type=corporate",
 	},
 	{
 		header: "Investments Buying and Selling",
@@ -75,6 +81,7 @@ const ACCOUNT_OPTIONS: accountOption[] = [
 		maintainanceFee: "15",
 		beneficts: "Access to stock markets and investment opportunities.",
 		intrest: 0,
+		link: "access/registration/offers/process?type=brokerage",
 	},
 ];
 
@@ -127,7 +134,7 @@ const page = () => {
 						return (
 							<div
 								key={idx}
-								className="relative flex flex-col shadow-md z-0 p-10"
+								className="relative flex flex-col shadow-md z-0 p-10 min-h-[540px]"
 							>
 								<img
 									src="/images/statements-1.jpg"
@@ -135,12 +142,12 @@ const page = () => {
 									className="absolute inset-0 object-cover w-full h-full grayscale -z-50"
 								/>
 
-								<span className=" flex flex-col justify-center items-start bg-white w-full text-xl absolute bottom-4 -right-10 p-4 shadow z-50">
+								<span className=" flex flex-col justify-center items-start bg-white w-full text-xl absolute bottom-2 -right-6 p-4 shadow z-50">
 									<h6 className="text-2xl text-primary-500">{option.name}</h6>
 									<p className="text-[16px] text-black/40">{option.context}</p>
 								</span>
 
-								<div className="flex flex-col gap-2 justify-center items-center text-center bg-black/30 border border-white/40 backdrop-blur-sm mb-20 py-4 text-white">
+								<div className="flex flex-col gap-2 justify-center items-center text-center bg-black/30 border border-white/40 backdrop-blur-sm mb-20 py-4 pb-8 text-white">
 									<div className="flex flex-col px-4">
 										<p className="account-p">
 											Minimum Account Opening {option.minimumAmount}
@@ -152,7 +159,7 @@ const page = () => {
 										<p className="account-p">{option.intrest} intrest</p>
 									</div>
 									<span className="relative mt-4 min-w-44 h-auto group bg-white">
-										<Link href="#">
+										<Link href={option.link}>
 											<button className="flex justify-center items-center w-full py-3 bg-primary-500 text-lg text-white group-hover:-translate-x-10 transition-discrete duration-300">
 												Open Account
 											</button>

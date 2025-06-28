@@ -87,7 +87,7 @@ function Hero() {
 		}, 200);
 	}, []);
 	return (
-		<div className="bg-beige-100 w-full">
+		<div className="bg-beige-100 w-full pt-1 md:pt-0">
 			<section className=" text-white lg:h-dvh main-p">
 				<div className="w-full h-full relative overflow-hidden flex flex-col md:grid md:grid-cols-11 bg-gray-900 md:bg-transparent px-4 gap-y-16 py-6">
 					<AnimatePresence>
@@ -118,7 +118,7 @@ function Hero() {
 					<motion.div
 						key={HeroContext[sIndex].header}
 						initial={false}
-						className="flex flex-col gap-8 lg:gap-6 md:col-span-7 md:order-2 md:w-[90%] my-auto bg-black/20 backdrop-blur-sm  shadow-white/30 shadow-inner p-8 overflow-hidden "
+						className="flex flex-col gap-8 lg:gap-6 md:col-span-7 md:order-2 md:w-[90%] my-auto bg-black/20 backdrop-blur-sm  shadow-white/30 shadow-inner py-8 px-4 lg:px-8 overflow-hidden "
 					>
 						<motion.h3
 							initial={{ y: -80, opacity: 0 }}
@@ -158,7 +158,7 @@ function Hero() {
 								className="bg-primary-500 hover:scale-95 transition-all duration-200 text-white/80"
 							/>
 						</div>
-						<div className="flex gap-2.5">
+						<div className="hidden md:flex gap-2.5">
 							<Button03
 								className="group hover:bg-primary-500 transition-colors duration-500"
 								doClick={() => {
