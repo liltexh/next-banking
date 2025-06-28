@@ -11,7 +11,7 @@ export default function Home() {
 	return (
 		<div className="min-h-screen bg-gray-50">
 			{/* Demo Toggle - Remove in production */}
-			{/* <div className="fixed top-4 right-4 z-50 bg-white p-2 rounded-lg shadow-md border">
+			<div className="fixed bottom-4 right-4 z-50 bg-white p-2 rounded-lg shadow-md border">
 				<div className="flex gap-2">
 					<Button
 						variant={dashboardType === "user" ? "default" : "outline"}
@@ -30,7 +30,7 @@ export default function Home() {
 						Admin Dashboard
 					</Button>
 				</div>
-			</div> */}
+			</div>
 
 			{dashboardType === "user" ? <UserDashboard /> : <AdminDashboard />}
 		</div>

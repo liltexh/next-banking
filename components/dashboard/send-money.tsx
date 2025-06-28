@@ -102,16 +102,16 @@ export function SendMoney() {
 							/>
 						</div>
 
-						<div className="flex items-center space-x-2">
+						{/* <div className="flex items-center space-x-2">
 							<Switch
 								id="schedule"
 								checked={isScheduled}
 								onCheckedChange={setIsScheduled}
 							/>
 							<Label htmlFor="schedule">Schedule this transfer</Label>
-						</div>
+						</div> */}
 
-						{isScheduled && (
+						{/* {isScheduled && (
 							<div className="grid grid-cols-2 gap-4">
 								<div>
 									<Label htmlFor="date">Date</Label>
@@ -134,7 +134,7 @@ export function SendMoney() {
 									/>
 								</div>
 							</div>
-						)}
+						)} */}
 
 						<div className="flex gap-2">
 							<Button
@@ -142,7 +142,7 @@ export function SendMoney() {
 								className="flex-1 bg-red-600 hover:bg-red-700"
 								disabled={!recipient || !amount}
 							>
-								{isScheduled ? "Schedule Transfer" : "Send Now"}
+								Send Now
 							</Button>
 						</div>
 					</form>

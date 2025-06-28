@@ -1,5 +1,5 @@
 "use client";
-
+import { useEffect, useState } from "react";
 import {
 	LayoutDashboard,
 	ArrowDownToLine,
@@ -22,6 +22,8 @@ export function Sidebar({
 	activeSection,
 	onSectionChange,
 }: SidebarProps) {
+	const [activeSidebar, setActiveSideBar] = useState(false);
+	const [deviceType, setDeviceType] = useState("");
 	const userNavItems = [
 		{ id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
 		{ id: "deposit", label: "Deposit Funds", icon: ArrowDownToLine },
@@ -38,21 +40,46 @@ export function Sidebar({
 	];
 
 	const navItems = type === "user" ? userNavItems : adminNavItems;
+	const getDeviceType = (width: number) => {
+		if (width < 768) {
+			return "mobile";
+		} else if (width >= 768 && width <= 1024) {
+			return "tablet";
+		} else {
+			return "desktop";
+		}
+	};
 
+	useEffect(() => {
+		const handleResize = () => {
+			const width = window.innerWidth;
+			const currentType = getDeviceType(width);
+			setDeviceType(currentType);
+		};
+		handleResize();
+
+		window.addEventListener("resize", handleResize);
+		return () => {
+			window.removeEventListener("resize", handleResize);
+		};
+	}, []);
 	return (
-		<div className="w-64 bg-white border-r border-gray-200 flex flex-col">
+		<div
+			className={cn(
+				"bg-white border-r border-gray-200 flex flex-col",
+				deviceType == "mobile" ? "w-28" : "w-72"
+			)}
+		>
 			<div className="p-6 border-b border-gray-200">
-				<div className="flex items-center gap-3">
+				<div className="flex flex-col md:flex-row text-center items-center gap-3">
 					<div className="w-8 h-8 bg-red-600 rounded flex items-center justify-center">
-						<span className="text-white font-bold text-sm">B</span>
+						<span className="text-white font-bold text-sm">G</span>
 					</div>
-					<span className="font-semibold text-slate-800">
-						Your Name of bank
-					</span>
+					<span className="font-semibold text-slate-800">GlobeTrust</span>
 				</div>
 			</div>
 
-			<nav className="flex-1 p-4">
+			<nav className="flex-1 p-2">
 				<ul className="space-y-2">
 					{navItems.map((item) => {
 						const Icon = item.icon;
@@ -61,10 +88,11 @@ export function Sidebar({
 								<button
 									onClick={() => onSectionChange(item.id)}
 									className={cn(
-										"w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors",
+										"w-full flex items-center gap-x-3 gap-y-1 px-4 py-2 rounded-lg text-left transition-colors",
 										activeSection === item.id
 											? "bg-red-50 text-red-600 border border-red-200"
-											: "text-slate-600 hover:bg-gray-50 hover:text-slate-800"
+											: "text-slate-600 hover:bg-gray-50 hover:text-slate-800",
+										deviceType == "mobile" && "flex-col text-center"
 									)}
 								>
 									<Icon className="w-5 h-5" />

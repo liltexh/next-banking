@@ -3,7 +3,13 @@ import {
 	NavigationMenuItem,
 	NavigationMenuList,
 } from "@/components/ui/navigation-menu";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { VisuallyHidden } from "@radix-ui/themes";
+import {
+	Sheet,
+	SheetContent,
+	SheetTitle,
+	SheetTrigger,
+} from "@/components/ui/sheet";
 import { CreditCard, LogIn, Menu } from "lucide-react";
 import Link from "next/link";
 import React from "react";
@@ -68,10 +74,16 @@ function Navbar() {
 						side="left"
 						className="bg-primary-500 p-4 border-r border-black text-white w-[60%]"
 					>
+						<VisuallyHidden>
+							<SheetTitle>navigation</SheetTitle>
+						</VisuallyHidden>
 						<div className="w-full h-[20%]">Extra logo</div>
 						<div className="flex flex-col space-y-2">
 							{NAVIGATION_ROUTES.map((item, idx: number) => (
-								<span className="py-2 border-t border-white/30  last:border-b last:pb-4">
+								<span
+									key={idx}
+									className="py-2 border-t border-white/30  last:border-b last:pb-4"
+								>
 									<Link
 										key={idx}
 										href={item.link}

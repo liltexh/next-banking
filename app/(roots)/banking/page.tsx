@@ -204,9 +204,11 @@ const page = () => {
 				<div className="flex flex-col gap-8 md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 px-2">
 					{STEPS_TO_ACCOUNT.map((steps, idx: number) => {
 						return (
-							<div className="relative w-fit m-auto after:absolute after:content-[''] after:w-full after:h-full after:top-2.5 after:left-2.5 after:-right-2.5 after:-bottom-2.5 after:border after:border-teal-300 after:-z-10">
+							<div
+								key={idx}
+								className="relative w-fit m-auto after:absolute after:content-[''] after:w-full after:h-full after:top-2.5 after:left-2.5 after:-right-2.5 after:-bottom-2.5 after:border after:border-teal-300 after:-z-10"
+							>
 								<div
-									key={idx}
 									className={`relative flex flex-col w-2xs z-0 p-10 bg-teal-300 text-white overflow-hidden  before:absolute before:content-['hello'] before:top-0 before:right-0 before:rotate-45 before:translate-x-24 before:translate-y-4 before:bg-white before:w-full before:py-2 before:text-center before:font-semibold before:z-50 before:text-black `}
 								>
 									<div className="flex flex-col gap-4 justify-center items-start border-b-2 border-white">

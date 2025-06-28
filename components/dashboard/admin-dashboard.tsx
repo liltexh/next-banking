@@ -35,7 +35,7 @@ export function AdminDashboard() {
 			/>
 			<div className="flex-1 flex flex-col">
 				<Topbar type="admin" />
-				<main className="flex-1 overflow-auto p-6 bg-gray-50">
+				<main className="flex-1 overflow-auto p-4 bg-gray-50">
 					{renderContent()}
 				</main>
 			</div>
