@@ -17,7 +17,7 @@ interface TopbarProps {
 export function Topbar({ type }: TopbarProps) {
 	return (
 		<header className="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-6 text-center">
-			<div className="flex items-center gap-4">
+			<div className="flex items-center gap-4 ml-16">
 				<h1 className="md:text-xl font-semibold text-slate-800">
 					{type === "user" ? "My Banking" : "Admin Portal"}
 				</h1>

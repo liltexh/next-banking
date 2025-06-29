@@ -8,6 +8,10 @@ import {
 	History,
 	Users,
 	Calendar,
+	DotIcon,
+	Loader,
+	LoaderCircle,
+	MoreHorizontalIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -22,7 +26,7 @@ export function Sidebar({
 	activeSection,
 	onSectionChange,
 }: SidebarProps) {
-	const [activeSidebar, setActiveSideBar] = useState(false);
+	const [SidebarActive, setSideBarActive] = useState(false);
 	const [deviceType, setDeviceType] = useState("");
 	const userNavItems = [
 		{ id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -50,6 +54,10 @@ export function Sidebar({
 		}
 	};
 
+	const toggleSideBar = () => {
+		SidebarActive ? setSideBarActive(false) : setSideBarActive(true);
+	};
+
 	useEffect(() => {
 		const handleResize = () => {
 			const width = window.innerWidth;
@@ -66,21 +74,31 @@ export function Sidebar({
 	return (
 		<div
 			className={cn(
-				"bg-white border-r border-gray-200 flex flex-col",
-				deviceType == "mobile" ? "w-28" : "w-72"
+				"absolute top-0 bottom-0 bg-white border-r border-gray-200 flex flex-col z-50 justify-start transition-discrete duration-300",
+				!SidebarActive ? "w-16" : "w-32 lg:w-72"
 			)}
 		>
-			<div className="p-6 border-b border-gray-200">
-				<div className="flex flex-col md:flex-row text-center items-center gap-3">
-					<div className="w-8 h-8 bg-red-600 rounded flex items-center justify-center">
-						<span className="text-white font-bold text-sm">G</span>
-					</div>
-					<span className="font-semibold text-slate-800">GlobeTrust</span>
+			<div
+				className="px-6 py-4 border-b border-gray-200"
+				onClick={toggleSideBar}
+			>
+				<div className="flex flex-col lg:flex-row text-center items-center justify-center">
+					<span className="flex flex-col lg:flex-row justify-center items-center gap-1">
+						<div className="w-8 h-8 bg-red-600 rounded flex items-center justify-center">
+							<span className="text-white font-bold text-sm">G</span>
+						</div>
+						{!SidebarActive ? (
+							""
+						) : (
+							<span className="font-semibold text-slate-800">GlobeTrust</span>
+						)}
+					</span>
+					<MoreHorizontalIcon className="text-primary-500   lg:ml-auto" />
 				</div>
 			</div>
 
-			<nav className="flex-1 p-2">
-				<ul className="space-y-2">
+			<nav className="flex-1 px-2 py-8">
+				<ul className="space-y-4">
 					{navItems.map((item) => {
 						const Icon = item.icon;
 						return (
@@ -88,15 +106,18 @@ export function Sidebar({
 								<button
 									onClick={() => onSectionChange(item.id)}
 									className={cn(
-										"w-full flex items-center gap-x-3 gap-y-1 px-4 py-2 rounded-lg text-left transition-colors",
+										"w-full flex items-center gap-x-3 gap-y-1 px-4 py-2 rounded-lg transition-colors flex-col text-center lg:text-left lg:flex-row ",
 										activeSection === item.id
 											? "bg-red-50 text-red-600 border border-red-200"
-											: "text-slate-600 hover:bg-gray-50 hover:text-slate-800",
-										deviceType == "mobile" && "flex-col text-center"
+											: "text-slate-600 hover:bg-gray-50 hover:text-slate-800"
 									)}
 								>
 									<Icon className="w-5 h-5" />
-									<span className="font-medium">{item.label}</span>
+									{!SidebarActive ? (
+										""
+									) : (
+										<span className="font-medium">{item.label}</span>
+									)}
 								</button>
 							</li>
 						);

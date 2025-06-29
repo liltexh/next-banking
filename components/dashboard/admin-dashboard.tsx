@@ -33,7 +33,7 @@ export function AdminDashboard() {
 				activeSection={activeSection}
 				onSectionChange={setActiveSection}
 			/>
-			<div className="flex-1 flex flex-col">
+			<div className="flex-1 flex flex-col ml-16 ">
 				<Topbar type="admin" />
 				<main className="flex-1 overflow-auto p-4 bg-gray-50">
 					{renderContent()}
