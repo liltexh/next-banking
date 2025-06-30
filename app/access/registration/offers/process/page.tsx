@@ -1,33 +1,73 @@
 "use client";
+import { useAddToFirestore } from "@/hooks/useAddToFirestore/useAddToFirestoreCollection";
+import { useRegisterUser } from "@/hooks/useRegisterUserWithEmail/useRegisterUserWithEmail";
+import { th } from "date-fns/locale";
 import { InfoIcon } from "lucide-react";
 import { useState } from "react";
 
 const page = () => {
 	const [userInfo, setUserInfo] = useState({
-		Fname: "",
-		Mname: "",
-		Lname: "",
-		DOB: "",
-		addressLine1: "",
-		addressLine2: "",
-		city: "",
-		state: "",
-		zipCode: "",
-		phoneNumber: "",
-		email: "",
-		verifyEmail: "",
-		password: "",
-		verifyPassword: "",
+		Fname: "John",
+		Mname: "A.",
+		Lname: "Doe",
+		DOB: "1990-01-01",
+		addressLine1: "123 Main St",
+		addressLine2: "Apt 4B",
+		city: "Springfield",
+		state: "IL",
+		zipCode: "62701",
+		phoneNumber: "(555) 123-4567",
+		email: "john.doe@example.com",
+		verifyEmail: "john.doe@example.com",
+		password: "SecurePassword123!",
+		verifyPassword: "SecurePassword123!",
 		country: "United States",
-		employmentStatus: "",
-		sourceOfIncome: "",
+		employmentStatus: "employed",
+		sourceOfIncome: "Salary",
 	});
+	const {
+		register,
+		loading: registerLoading,
+		error: registerError,
+	} = useRegisterUser();
+	const {
+		addDocument,
+		loading: addDocumentgLoading,
+		error: addDocumentError,
+	} = useAddToFirestore();
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
 	) => {
 		const { name, value } = e.target;
 		setUserInfo((prev) => ({ ...prev, [name]: value }));
 		console.log(name, value);
+	};
+	const storeAndRgisterUser = async () => {
+		// This function will handle the user registration logic
+
+		try {
+			const { email, verifyEmail, password, verifyPassword } = userInfo;
+			if (
+				email &&
+				email == verifyEmail &&
+				password &&
+				password == verifyPassword
+			) {
+				const userAdded = await register(email, password);
+				if (userAdded) {
+					const userDocAdded = await addDocument("users", {
+						...userInfo,
+						userId: userAdded.user.uid,
+						accountNumber: Math.floor(Math.random() * 10 + 1),
+					});
+
+					userDocAdded &&
+						console.log("User Document Added Successfully", userDocAdded);
+				}
+			} else {
+				throw new Error("Email or Password mismatch");
+			}
+		} catch (error) {}
 	};
 	return (
 		<div className="main-p main-py">
