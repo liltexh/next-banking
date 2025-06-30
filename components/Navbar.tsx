@@ -95,6 +95,24 @@ function Navbar() {
 								</span>
 							))}
 						</div>
+						<span className="w-full flex flex-col gap-2 justify-center items-start mt-auto mb-8">
+							<Link
+								href="#"
+								className="w-full"
+							>
+								<Button04 className="gap-2 bg-black text-white w-full">
+									<LogIn /> Login
+								</Button04>
+							</Link>
+							<Link
+								href="/banking"
+								className="w-full"
+							>
+								<Button04 className="gap-2 bg-white text-black w-full">
+									<CreditCard /> Open an Account
+								</Button04>
+							</Link>
+						</span>
 					</SheetContent>
 				</Sheet>
 			</div>
