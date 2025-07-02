@@ -11,6 +11,7 @@ import {
 } from "@/components/dashboard/ui/dropdown-menu";
 import { useUserStore } from "@/store/useUserStore";
 import { useEffect, useState } from "react";
+import { logUserOut } from "@/lib/firebaseUtils/logUserOut";
 
 interface TopbarProps {
 	type: "user" | "admin";
@@ -104,7 +105,9 @@ export function Topbar({ type }: TopbarProps) {
 							</Button>
 						</DropdownMenuItem>
 						<DropdownMenuSeparator />
-						<DropdownMenuItem className="text-red-600">Logout</DropdownMenuItem>
+						<DropdownMenuItem className="text-red-600">
+							<button onClick={logUserOut}>Logout</button>
+						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
 			</div>
