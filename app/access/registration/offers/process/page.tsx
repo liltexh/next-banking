@@ -1,11 +1,13 @@
 "use client";
 import { useAddToFirestore } from "@/hooks/useAddToFirestore/useAddToFirestoreCollection";
 import { useRegisterUser } from "@/hooks/useRegisterUserWithEmail/useRegisterUserWithEmail";
-import { th } from "date-fns/locale";
 import { InfoIcon } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 const page = () => {
+	const searchParams = useSearchParams();
+	const accountType = searchParams.get("type");
 	const [userInfo, setUserInfo] = useState({
 		Fname: "John",
 		Mname: "A.",
@@ -25,6 +27,15 @@ const page = () => {
 		employmentStatus: "employed",
 		sourceOfIncome: "Salary",
 	});
+
+	const [userBankInfo, setUserBankInfo] = useState({
+		currentBalance: 0.0,
+		lastTransaction: 0.0,
+		pendingTransfers: [0.0],
+		transactionHistory: [],
+	});
+
+	const [loading, setLoading] = useState(false);
 	const {
 		register,
 		loading: registerLoading,
@@ -35,6 +46,21 @@ const page = () => {
 		loading: addDocumentgLoading,
 		error: addDocumentError,
 	} = useAddToFirestore();
+
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault(); // ✅ prevent page reload
+		setLoading(true);
+
+		try {
+			await storeAndRegisterUser();
+			console.log("Done!");
+		} catch (error) {
+			console.error("Error:", error);
+		} finally {
+			setLoading(false);
+		}
+	};
+
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
 	) => {
@@ -42,7 +68,7 @@ const page = () => {
 		setUserInfo((prev) => ({ ...prev, [name]: value }));
 		console.log(name, value);
 	};
-	const storeAndRgisterUser = async () => {
+	const storeAndRegisterUser = async () => {
 		// This function will handle the user registration logic
 
 		try {
@@ -55,13 +81,24 @@ const page = () => {
 			) {
 				const userAdded = await register(email, password);
 				if (userAdded) {
+					console.log("User Registered Successfully", userAdded);
+					const accountNumber = Math.floor(Math.random() * 10000000000 + 1);
 					const userDocAdded = await addDocument("users", {
 						...userInfo,
 						userId: userAdded.user.uid,
-						accountNumber: Math.floor(Math.random() * 10 + 1),
+						isAdmin: false,
+						accountNumber,
+					});
+					const userAccountAdded = await addDocument("accounts", {
+						...userBankInfo,
+						userId: userAdded.user.uid,
+						email,
+						accountNumber,
+						accountType,
 					});
 
 					userDocAdded &&
+						userAccountAdded &&
 						console.log("User Document Added Successfully", userDocAdded);
 				}
 			} else {
@@ -82,7 +119,7 @@ const page = () => {
 					</p>
 				</div>
 				<form
-					action=""
+					onSubmit={handleSubmit}
 					className=""
 				>
 					<div className="relative flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pt-16 pb-8 w-full border-b border-black/30">
@@ -96,6 +133,7 @@ const page = () => {
 							required
 							placeholder="First Name *"
 							className="w-full p-4 border border-gray-300 bg-white"
+							value={userInfo.Fname}
 							onChange={handleChange}
 						/>
 						<input
@@ -103,6 +141,7 @@ const page = () => {
 							name="Mname"
 							placeholder="Middle Name"
 							className="w-full p-4 border border-gray-300 bg-white"
+							value={userInfo.Mname}
 							onChange={handleChange}
 						/>
 						<input
@@ -111,6 +150,7 @@ const page = () => {
 							required
 							placeholder="Last Name *"
 							className="w-full p-4 border border-gray-300 bg-white"
+							value={userInfo.Lname}
 							onChange={handleChange}
 						/>
 						<input
@@ -119,6 +159,7 @@ const page = () => {
 							required
 							placeholder="Date Of Birth *"
 							className="w-full p-4 border border-gray-300 bg-white"
+							value={userInfo.DOB}
 							onChange={handleChange}
 						/>
 					</div>
@@ -135,6 +176,7 @@ const page = () => {
 								required
 								placeholder="Address Line 1 *"
 								className="w-full p-4 border border-gray-300 bg-white"
+								value={userInfo.addressLine1}
 								onChange={handleChange}
 							/>
 							<input
@@ -142,6 +184,7 @@ const page = () => {
 								name="addressLine2"
 								placeholder="Address Line 2 *"
 								className="w-full p-4 border border-gray-300 bg-white"
+								value={userInfo.addressLine2}
 								onChange={handleChange}
 							/>
 							<input
@@ -150,6 +193,7 @@ const page = () => {
 								required
 								placeholder="City *"
 								className="w-full p-4 border border-gray-300 bg-white"
+								value={userInfo.city}
 								onChange={handleChange}
 							/>
 							<input
@@ -158,6 +202,16 @@ const page = () => {
 								required
 								placeholder="State *"
 								className="w-full p-4 border border-gray-300 bg-white"
+								value={userInfo.state}
+								onChange={handleChange}
+							/>
+							<input
+								type="text"
+								name="country"
+								required
+								placeholder="Country Of Residency *"
+								className="w-full p-4 border border-gray-300 bg-white max-w-96"
+								value={userInfo.country}
 								onChange={handleChange}
 							/>
 							<input
@@ -166,6 +220,7 @@ const page = () => {
 								required
 								placeholder="ZIP Code"
 								className="w-full p-4 border border-gray-300 bg-white"
+								value={userInfo.zipCode}
 								onChange={handleChange}
 							/>
 						</div>
@@ -196,6 +251,7 @@ const page = () => {
 								required
 								placeholder="Phone number *"
 								className="w-full p-4 border border-gray-300 bg-white"
+								value={userInfo.phoneNumber}
 								onChange={handleChange}
 							/>
 
@@ -205,6 +261,7 @@ const page = () => {
 								required
 								placeholder="Email Address *"
 								className="w-full p-4 border border-gray-300 bg-white"
+								value={userInfo.email}
 								onChange={handleChange}
 							/>
 							<input
@@ -213,6 +270,7 @@ const page = () => {
 								required
 								placeholder="Re-enter Email Address *"
 								className="w-full p-4 border border-gray-300 bg-white"
+								value={userInfo.verifyEmail}
 								onChange={handleChange}
 							/>
 							<input
@@ -221,6 +279,7 @@ const page = () => {
 								required
 								placeholder="Enter Password *"
 								className="w-full p-4 border border-gray-300 bg-white"
+								value={userInfo.password}
 								onChange={handleChange}
 							/>
 							<input
@@ -229,12 +288,13 @@ const page = () => {
 								required
 								placeholder="Re-enter Password *"
 								className="w-full p-4 border border-gray-300 bg-white"
+								value={userInfo.verifyPassword}
 								onChange={handleChange}
 							/>
 						</div>
 					</div>
 					{/*Residency*/}
-					<div className="relative flex flex-col items-start gap-6 pt-16 pb-8 w-full border-b border-black/30">
+					{/* <div className="relative flex flex-col items-start gap-6 pt-16 pb-8 w-full border-b border-black/30">
 						<span className="absolute top-0 left-0 text-lg text-blue-500 w-full flex pt-2">
 							<p>Residency</p>{" "}
 							<span className="ml-auto text-primary-500">* required</span>
@@ -264,15 +324,7 @@ const page = () => {
 								</label>
 							</span>
 						</div>
-						<input
-							type="text"
-							name="country"
-							required
-							placeholder="Country Of Residency *"
-							className="w-full p-4 border border-gray-300 bg-white max-w-96"
-							onChange={handleChange}
-						/>
-					</div>
+					</div> */}
 					{/*Employment And Finances*/}
 					<div className="relative flex flex-col items-start gap-6 pt-16 pb-8 w-full border-b border-black/30">
 						<span className="absolute top-0 left-0 text-lg text-blue-500 w-full flex pt-2">
@@ -283,6 +335,7 @@ const page = () => {
 							name="employmentStatus"
 							required
 							className="w-full p-4 border border-gray-300 bg-white max-w-96"
+							value={userInfo.employmentStatus}
 							onChange={handleChange}
 						>
 							<option value="">--Employment Status--</option>
@@ -298,6 +351,7 @@ const page = () => {
 							required
 							placeholder="Source Of Income *"
 							className="w-full p-4 border border-gray-300 bg-white max-w-96"
+							value={userInfo.sourceOfIncome}
 							onChange={handleChange}
 						/>
 					</div>

@@ -4,6 +4,7 @@ import { db } from "@/lib/firebase";
 import { auth } from "@/lib/firebase";
 
 export const getFirestoreDocument = async <T>(
+	UID: string | undefined,
 	collectionName: string
 ): Promise<T | null> => {
 	const currentUser = auth.currentUser;
@@ -14,7 +15,7 @@ export const getFirestoreDocument = async <T>(
 
 	const q = query(
 		collection(db, collectionName),
-		where("userId", "==", currentUser.uid)
+		where("userId", "==", UID || currentUser.uid) // Use UId or fallback to currentUser.uids
 	);
 
 	const querySnapshot = await getDocs(q);

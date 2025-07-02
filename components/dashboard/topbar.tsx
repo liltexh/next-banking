@@ -9,12 +9,43 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/dashboard/ui/dropdown-menu";
+import { useUserStore } from "@/store/useUserStore";
+import { useEffect, useState } from "react";
 
 interface TopbarProps {
 	type: "user" | "admin";
 }
 
+type userType = {
+	name: string;
+	email: string;
+	Fname: string;
+	Mname: string;
+	Lname: string;
+	// Add other user properties as needed
+};
+
 export function Topbar({ type }: TopbarProps) {
+	const { user, loading } = useUserStore();
+	const [userInfo, setUserInfo] = useState<userType | null>(null);
+	useEffect(() => {
+		const checkUser = () => {
+			if (loading) {
+				return; // or return a loading spinner
+			}
+			if (!user) {
+				console.log("No user found, redirecting to login");
+				// Redirect logic can be added here if needed
+			} else {
+				const { name, email } = user;
+				const { Fname = "User", Mname = "", Lname = "" } = user.otherInfo || {};
+				setUserInfo({ name, email, Fname, Mname, Lname });
+			}
+		};
+		checkUser();
+		return () => checkUser();
+	}, [user, loading]);
+
 	return (
 		<header className="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-6 text-center">
 			<div className="flex items-center gap-4 ml-16">
@@ -41,7 +72,9 @@ export function Topbar({ type }: TopbarProps) {
 								<User className="w-4 h-4 text-slate-600" />
 							</div>
 							<span className="text-slate-800 font-medium">
-								{type === "user" ? "John Doe" : "Admin User"}
+								{type === "user"
+									? `${userInfo?.Fname} ${userInfo?.Mname} ${userInfo?.Lname}`
+									: "Admin User"}
 							</span>
 							<ChevronDown className="w-4 h-4 text-slate-600" />
 						</Button>

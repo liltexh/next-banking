@@ -1,6 +1,6 @@
 // hooks/useUserDocument.ts
 import { useEffect, useState } from "react";
-import { getFirestoreDocument } from "./getFirestoreDocument";
+import { getFirestoreDocument } from "../../lib/firebaseUtils/getFirestoreDocument";
 
 type UseUserDocumentResult<T> = {
 	data: T | null;
@@ -8,7 +8,8 @@ type UseUserDocumentResult<T> = {
 	error: string | null;
 };
 
-export const useUserDocument = <T,>(
+export const useFirestoreDocument = <T,>(
+	userId: string,
 	collectionName: string
 ): UseUserDocumentResult<T> => {
 	const [data, setData] = useState<T | null>(null);
@@ -21,7 +22,7 @@ export const useUserDocument = <T,>(
 			setError(null);
 
 			try {
-				const result = await getFirestoreDocument<T>(collectionName);
+				const result = await getFirestoreDocument<T>(userId, collectionName);
 				setData(result);
 			} catch (err: any) {
 				setError(err.message || "Failed to fetch document");

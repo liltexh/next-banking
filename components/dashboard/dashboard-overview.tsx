@@ -1,12 +1,54 @@
 import { SummaryCard } from "@/components/dashboard/summary-card";
+import { useUserStore } from "@/store/useUserStore";
 import {
 	ArrowDownToLine,
 	ArrowUpFromLine,
 	Clock,
 	CheckCircle,
 } from "lucide-react";
+import { useEffect, useState } from "react";
+
+type accountType = {
+	accountNumber: number;
+	accountType: string;
+	currentBalance: number;
+	lastTransaction: number;
+	pendingTransfers: number[];
+	totalPending: number;
+	amountOfPending: number;
+	[key: string]: any;
+	// Add other user properties as needed
+};
 
 export function DashboardOverview() {
+	const [accountDetails, setAccountDetails] = useState<accountType>();
+	const { account: userAccount, loading } = useUserStore();
+	const handlePendingTransfers = (transfers: number[]) => {
+		const totalSum = transfers.reduce((acc, curr) => acc + curr, 0);
+		const totalCount = transfers.length;
+		return [totalSum || 0, totalCount || 0];
+	};
+
+	useEffect(() => {
+		const getAccountDetails = () => {
+			if (loading) {
+				return; // or return a loading spinner
+			}
+			if (!userAccount) {
+				console.log("No userAccount found, check database");
+				// Redirect logic can be added here if needed
+			} else {
+				const { pendingTransfers } = userAccount;
+				const [totalPending, amountOfPending] =
+					handlePendingTransfers(pendingTransfers);
+				setAccountDetails({ ...userAccount, totalPending, amountOfPending });
+			}
+		};
+
+		getAccountDetails();
+		// Cleanup function is not needed here, so return undefined
+	}, [userAccount, loading]);
+
 	return (
 		<div className="space-y-6">
 			<div>
@@ -21,7 +63,7 @@ export function DashboardOverview() {
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 				<SummaryCard
 					title="Current Balance"
-					value="$12,847.32"
+					value={`$ ${String(accountDetails?.currentBalance)}`}
 					icon={<CheckCircle className="w-6 h-6 text-green-600" />}
 					trend="+2.5% from last month"
 					trendUp={true}
@@ -29,7 +71,7 @@ export function DashboardOverview() {
 
 				<SummaryCard
 					title="Last Transaction"
-					value="$-45.67"
+					value={`$ ${String(accountDetails?.lastTransaction)}`}
 					icon={<ArrowUpFromLine className="w-6 h-6 text-red-600" />}
 					trend="Coffee Shop - Today"
 					trendUp={false}
@@ -37,20 +79,20 @@ export function DashboardOverview() {
 
 				<SummaryCard
 					title="Pending Transfers"
-					value="$500.00"
+					value={`$ ${String(accountDetails?.totalPending)}`}
 					icon={<Clock className="w-6 h-6 text-yellow-600" />}
-					trend="2 transfers pending"
+					trend={`${String(accountDetails?.amountOfPending)} transfers pending`}
 					trendUp={null}
 					highlighted={true}
 				/>
 
-				<SummaryCard
-					title="Scheduled Transactions"
-					value="$1,200.00"
-					icon={<ArrowDownToLine className="w-6 h-6 text-blue-600" />}
-					trend="Next: Rent payment"
-					trendUp={null}
-				/>
+				{/* <SummaryCard
+						title="Scheduled Transactions"
+						value="$1,200.00"
+						icon={<ArrowDownToLine className="w-6 h-6 text-blue-600" />}
+						trend="Next: Rent payment"
+						trendUp={null}
+					/> */}
 			</div>
 
 			<div className="bg-white rounded-lg shadow-md p-6">
