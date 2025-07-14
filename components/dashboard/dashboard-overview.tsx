@@ -24,10 +24,13 @@ export function DashboardOverview() {
 	const [accountDetails, setAccountDetails] = useState<accountType>();
 	const { account: userAccount, loading } = useUserStore();
 
-	const handlePendingTransfers = (transfers: number[]) => {
-		const totalSum = transfers.reduce((acc, curr) => acc + curr, 0);
-		const totalCount = transfers.length;
-		return [totalSum || 0, totalCount || 0];
+	const handlePendingTransfers = (transfers: any[]) => {
+		const values = transfers.map((t) =>
+			typeof t === "number" ? t : t.amount || 0
+		);
+		const totalSum = values.reduce((acc, curr) => acc + curr, 0);
+		const totalCount = values.length;
+		return [totalSum, totalCount];
 	};
 
 	useEffect(() => {
@@ -82,7 +85,7 @@ export function DashboardOverview() {
 
 				<SummaryCard
 					title="Pending Transfers"
-					value={`$ ${String(accountDetails?.totalPending)}`}
+					value={`$ ${accountDetails?.totalPending}`}
 					icon={<Clock className="w-6 h-6 text-yellow-600" />}
 					trend={`${String(accountDetails?.amountOfPending)} transfers pending`}
 					trendUp={null}
@@ -100,68 +103,47 @@ export function DashboardOverview() {
 
 			<div className="bg-white rounded-lg shadow-md p-6">
 				<h3 className="text-lg font-semibold text-slate-800 mb-4">
-					Recent Activity
+					Transaction History
 				</h3>
-				<div className="space-y-4">
-					{[
-						{
-							date: "Today",
-							description: "Coffee Shop Purchase",
-							amount: "-$4.67",
-							status: "completed",
-						},
-						{
-							date: "Yesterday",
-							description: "Salary Deposit",
-							amount: "+$3,200.00",
-							status: "completed",
-						},
-						{
-							date: "Dec 20",
-							description: "Transfer to Savings",
-							amount: "-$500.00",
-							status: "pending",
-						},
-						{
-							date: "Dec 19",
-							description: "Online Purchase",
-							amount: "-$89.99",
-							status: "completed",
-						},
-					].map((transaction, index) => (
-						<div
-							key={index}
-							className="flex items-center justify-between py-3 border-b border-gray-100 last:border-b-0"
-						>
-							<div>
-								<p className="font-medium text-slate-800">
-									{transaction.description}
-								</p>
-								<p className="text-sm text-slate-600">{transaction.date}</p>
-							</div>
-							<div className="text-right">
-								<p
-									className={`font-semibold ${
-										transaction.amount.startsWith("+")
-											? "text-green-600"
-											: "text-slate-800"
-									}`}
+				{accountDetails?.transactionHistory?.length ? (
+					<div className="space-y-4">
+						{accountDetails.transactionHistory
+							.slice(0, 6) // show only latest 6 transactions
+							.map((txn: any, index: number) => (
+								<div
+									key={index}
+									className="flex items-center justify-between py-3 border-b border-gray-100 last:border-b-0"
 								>
-									{transaction.amount}
-								</p>
-								<span
-									className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
-										transaction.status === "completed"
-											? "bg-green-100 text-green-800"
-											: "bg-yellow-100 text-yellow-800"
-									}`}
-								>
-									{transaction.status}
-								</span>
-							</div>
-						</div>
-					))}
-				</div>
+									<div>
+										<p className="font-medium text-slate-800 capitalize">
+											{txn.action} – ${txn.amount?.toLocaleString() ?? 0}
+										</p>
+										<p className="text-sm text-slate-600">{txn.time}</p>
+									</div>
+									<div className="text-right">
+										<p
+											className={`font-semibold ${
+												txn.action === "deposited"
+													? "text-green-600"
+													: txn.action === "withdrew"
+													? "text-red-600"
+													: "text-blue-600"
+											}`}
+										>
+											{txn.action === "deposited" ? "+" : "-"}$
+											{txn.amount?.toLocaleString()}
+										</p>
+										{/* Optional: Add status if you include it in the future */}
+										{/* <span className="inline-block px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+								completed
+							</span> */}
+									</div>
+								</div>
+							))}
+					</div>
+				) : (
+					<p className="text-gray-500 text-sm">No transactions yet.</p>
+				)}
 			</div>
 		</div>
 	);

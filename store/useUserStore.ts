@@ -3,6 +3,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { create } from "zustand";
 import { getFirestoreDocument } from "../lib/firebaseUtils/getFirestoreDocument";
 import { getAllAccountsSummary } from "@/lib/firebaseUtils/getAccountsSummary";
+import { processExpiredTransfers } from "@/lib/firebaseUtils/processExpiredTransfers";
 
 interface FirestoreUserData {
 	userId?: string;
@@ -82,6 +83,7 @@ export const useUserStore = create<UserStore>((set) => ({
 					"accounts"
 				);
 				const adminAccountDoc = await getAllAccountsSummary();
+				await processExpiredTransfers(firebaseUser.uid);
 				const userData: UserStoreData = {
 					userId: userDoc?.userId || firebaseUser.uid,
 					name: userDoc?.Fname || firebaseUser.displayName || "", // fallback if null

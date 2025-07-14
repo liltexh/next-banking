@@ -1,3 +1,5 @@
+"use client";
+import { useUserStore } from "@/store/useUserStore";
 import { Badge } from "@/components/dashboard/ui/badge";
 import {
 	Table,
@@ -15,76 +17,36 @@ import {
 	CardTitle,
 } from "@/components/dashboard/ui/card";
 
-const transactions = [
-	{
-		id: "1",
-		date: "2024-01-15",
-		description: "Coffee Shop Purchase",
-		type: "Withdrawal",
-		amount: -4.67,
-		status: "Completed",
-	},
-	{
-		id: "2",
-		date: "2024-01-14",
-		description: "Salary Deposit",
-		type: "Deposit",
-		amount: 3200.0,
-		status: "Completed",
-	},
-	{
-		id: "3",
-		date: "2024-01-13",
-		description: "Transfer to John Doe",
-		type: "Transfer",
-		amount: -500.0,
-		status: "Pending",
-	},
-	{
-		id: "4",
-		date: "2024-01-12",
-		description: "Online Purchase - Amazon",
-		type: "Withdrawal",
-		amount: -89.99,
-		status: "Completed",
-	},
-	{
-		id: "5",
-		date: "2024-01-11",
-		description: "Rent Payment",
-		type: "Transfer",
-		amount: -1200.0,
-		status: "Scheduled",
-	},
-	{
-		id: "6",
-		date: "2024-01-10",
-		description: "ATM Withdrawal",
-		type: "Withdrawal",
-		amount: -100.0,
-		status: "Completed",
-	},
-];
-
 export function TransactionHistory() {
+	const { account, loading } = useUserStore();
+
+	const transactions = !account?.isAdmin
+		? account?.transactionHistory || []
+		: [];
+
+	const pendingTransfers = !account?.isAdmin
+		? account?.pendingTransfers || []
+		: [];
+
+	const formatAmount = (amount: number) => {
+		const formatted = Math.abs(amount).toFixed(2);
+		return amount >= 0 ? `+$${formatted}` : `-$${formatted}`;
+	};
+
 	const getStatusBadge = (status: string) => {
 		switch (status) {
 			case "Completed":
+			case "Delivered":
 				return (
 					<Badge className="bg-green-100 text-green-800 hover:bg-green-100">
-						Completed
+						{status}
 					</Badge>
 				);
 			case "Pending":
-				return (
-					<Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100">
-						Pending
-					</Badge>
-				);
 			case "Scheduled":
 				return (
-					<Badge className="bg-gray-100 text-gray-800 hover:bg-gray-100">
-						Scheduled
+					<Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100">
+						{status}
 					</Badge>
 				);
 			default:
@@ -92,60 +54,116 @@ export function TransactionHistory() {
 		}
 	};
 
-	const formatAmount = (amount: number) => {
-		const formatted = Math.abs(amount).toFixed(2);
-		return amount >= 0 ? `+$${formatted}` : `-$${formatted}`;
-	};
-
 	return (
-		<div>
-			<div className="mb-6">
+		<div className="space-y-10">
+			{/* Transaction History Section */}
+			<div>
 				<h2 className="text-2xl font-semibold text-slate-800 mb-2">
 					Transaction History
 				</h2>
 				<p className="text-slate-600">View all your account transactions</p>
+
+				<Card className="mt-6">
+					<CardHeader>
+						<CardTitle>Recent Transactions</CardTitle>
+						<CardDescription>
+							This includes deposits, withdrawals and transfers.
+						</CardDescription>
+					</CardHeader>
+					<CardContent>
+						<Table>
+							<TableHeader>
+								<TableRow>
+									<TableHead>Date</TableHead>
+									<TableHead>Action</TableHead>
+									<TableHead className="text-right">Amount</TableHead>
+								</TableRow>
+							</TableHeader>
+							<TableBody>
+								{transactions?.length > 0 ? (
+									transactions.map((txn: any, idx: number) => (
+										<TableRow key={idx}>
+											<TableCell>
+												{txn.time
+													? new Date(txn.time).toLocaleDateString()
+													: "N/A"}
+											</TableCell>
+											<TableCell className="capitalize">{txn.action}</TableCell>
+											<TableCell
+												className={`text-right font-semibold ${
+													txn.action === "deposited"
+														? "text-green-600"
+														: txn.action === "withdrew"
+														? "text-red-600"
+														: "text-blue-600"
+												}`}
+											>
+												{formatAmount(txn.amount || 0)}
+											</TableCell>
+										</TableRow>
+									))
+								) : (
+									<TableRow>
+										<TableCell colSpan={3}>No transactions yet</TableCell>
+									</TableRow>
+								)}
+							</TableBody>
+						</Table>
+					</CardContent>
+				</Card>
 			</div>
 
-			<Card>
-				<CardHeader>
-					<CardTitle>Recent Transactions</CardTitle>
-					<CardDescription>Your complete transaction history</CardDescription>
-				</CardHeader>
-				<CardContent>
-					<Table>
-						<TableHeader>
-							<TableRow>
-								<TableHead>Date</TableHead>
-								<TableHead>Description</TableHead>
-								<TableHead>Type</TableHead>
-								<TableHead className="text-right">Amount</TableHead>
-								<TableHead>Status</TableHead>
-							</TableRow>
-						</TableHeader>
-						<TableBody>
-							{transactions.map((transaction) => (
-								<TableRow key={transaction.id}>
-									<TableCell className="font-medium">
-										{new Date(transaction.date).toLocaleDateString()}
-									</TableCell>
-									<TableCell>{transaction.description}</TableCell>
-									<TableCell>{transaction.type}</TableCell>
-									<TableCell
-										className={`text-right font-semibold ${
-											transaction.amount >= 0
-												? "text-green-600"
-												: "text-slate-800"
-										}`}
-									>
-										{formatAmount(transaction.amount)}
-									</TableCell>
-									<TableCell>{getStatusBadge(transaction.status)}</TableCell>
+			{/* Incoming Transfers Section */}
+			<div>
+				<h2 className="text-2xl font-semibold text-slate-800 mb-2">
+					Pending Incoming Transfers
+				</h2>
+				<p className="text-slate-600">
+					Transfers scheduled to arrive in your account
+				</p>
+
+				<Card className="mt-6">
+					<CardHeader>
+						<CardTitle>Incoming Transfers</CardTitle>
+						<CardDescription>
+							These are scheduled or pending transfers that you’ll receive soon.
+						</CardDescription>
+					</CardHeader>
+					<CardContent>
+						<Table>
+							<TableHeader>
+								<TableRow>
+									<TableHead>Recipient</TableHead>
+									<TableHead>Date</TableHead>
+									<TableHead className="text-right">Amount</TableHead>
+									<TableHead>Status</TableHead>
 								</TableRow>
-							))}
-						</TableBody>
-					</Table>
-				</CardContent>
-			</Card>
+							</TableHeader>
+							<TableBody>
+								{pendingTransfers?.length > 0 ? (
+									pendingTransfers.map((transfer: any, idx: number) => (
+										<TableRow key={idx}>
+											<TableCell>{transfer.recipient || "N/A"}</TableCell>
+											<TableCell>
+												{transfer.deliveryDate || "Unknown"}{" "}
+												{transfer.deliveryTime || ""}
+											</TableCell>
+											<TableCell className="text-right text-blue-600 font-semibold">
+												${(transfer.amount || 0).toLocaleString()}
+											</TableCell>
+											<TableCell>{getStatusBadge(transfer.status)}</TableCell>
+										</TableRow>
+									))
+								) : (
+									<TableRow>
+										<TableCell colSpan={4}>No pending transfers</TableCell>
+									</TableRow>
+								)}
+							</TableBody>
+						</Table>
+					</CardContent>
+				</Card>
+			</div>
 		</div>
 	);
 }

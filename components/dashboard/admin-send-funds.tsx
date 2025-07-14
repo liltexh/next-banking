@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/dashboard/ui/input";
@@ -31,16 +30,9 @@ interface allUsers {
 	[key: string]: any;
 }
 
-// const users = [
-// 	{ id: "1", name: "John Doe", email: "john.doe@email.com" },
-// 	{ id: "2", name: "Jane Smith", email: "jane.smith@email.com" },
-// 	{ id: "3", name: "Mike Johnson", email: "mike.johnson@email.com" },
-// 	{ id: "4", name: "Sarah Wilson", email: "sarah.wilson@email.com" },
-// 	{ id: "5", name: "David Brown", email: "david.brown@email.com" },
-// ];
-
 export function AdminSendFunds() {
 	const [selectedUser, setSelectedUser] = useState("");
+	const [senderName, setSenderName] = useState("");
 	const [amount, setAmount] = useState("");
 	const [note, setNote] = useState("");
 	const [isScheduled, setIsScheduled] = useState(false);
@@ -50,67 +42,46 @@ export function AdminSendFunds() {
 	const { update: updateAUserDocument, loading: updateLoading } =
 		useUpdateUserDocument();
 	const { account: adminAccount, loading } = useUserStore();
-	useEffect(() => {
-		const getAccountDetails = () => {
-			if (loading) {
-				console.log("this code is loading");
-				return; // or return a loading spinner
-			}
-			console.log("i am tired very very tired");
-			if (!adminAccount) {
-				console.log("No userAccount found, check database");
-				// Redirect logic can be added here if needed
-			} else {
-				if (adminAccount?.isAdmin) {
-					setAllUsers(adminAccount?.allAccounts);
-				}
-				console.log("this is the admin account i am telling you", adminAccount);
-				console.log("this is all admin account", allUsers);
-			}
-		};
 
-		getAccountDetails();
-		// Cleanup function is not needed here, so return undefined
+	useEffect(() => {
+		if (!loading && adminAccount?.isAdmin) {
+			setAllUsers(adminAccount?.allAccounts);
+		}
 	}, [adminAccount, loading]);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		// Handle admin send funds logic here
-		const userInfo = allUsers.find((user: any) => user.email == selectedUser);
+		const userInfo = allUsers.find((user: any) => user.email === selectedUser);
 		if (!userInfo) {
 			console.error("User not found in allUsers");
 			return;
 		}
-		try {
-			const userSceduledAmountUpdate = {
-				recipient: userInfo?.name || "",
-				email: selectedUser,
-				amount,
-				note,
-				status: isScheduled ? "Scheduled" : "Delivered",
-				deliveryDate: scheduleDate,
-				deliveryTime: scheduleTime,
-			};
-			await updateAUserDocument("accounts", selectedUser, {
-				pendingTransfers: arrayUnion(userSceduledAmountUpdate),
-			});
-			console.log("Admin sending funds succesfull:", {
-				selectedUser,
-				amount,
-				note,
-				isScheduled,
-				scheduleDate,
-				scheduleTime,
-			});
-			setSelectedUser("");
-			setAmount("");
-			setNote("");
-			setIsScheduled(false);
-			setScheduleDate("");
-			setScheduleTime("");
-		} catch (error) {
-			console.log("error", error);
-		}
+
+		const deliveryTimestamp = isScheduled
+			? new Date(`${scheduleDate}T${scheduleTime}`).toISOString()
+			: new Date().toISOString();
+
+		const userScheduledAmountUpdate = {
+			from: senderName,
+			amount: parseFloat(amount),
+			note,
+			createdAt: new Date().toISOString(),
+			expiresAt: deliveryTimestamp,
+			status: isScheduled ? "pending" : "delivered",
+			id: `tx_${Date.now()}`,
+		};
+
+		await updateAUserDocument("accounts", userInfo.userId, {
+			pendingTransfers: arrayUnion(userScheduledAmountUpdate),
+		});
+
+		setSelectedUser("");
+		setSenderName("");
+		setAmount("");
+		setNote("");
+		setIsScheduled(false);
+		setScheduleDate("");
+		setScheduleTime("");
 	};
 
 	return (
@@ -152,6 +123,18 @@ export function AdminSendFunds() {
 									))}
 								</SelectContent>
 							</Select>
+						</div>
+
+						<div>
+							<Label htmlFor="sender">Sender Name</Label>
+							<Input
+								id="sender"
+								type="text"
+								placeholder="Admin Name or Source"
+								value={senderName}
+								onChange={(e) => setSenderName(e.target.value)}
+								required
+							/>
 						</div>
 
 						<div>
@@ -222,7 +205,9 @@ export function AdminSendFunds() {
 						<Button
 							type="submit"
 							className="flex gap-2 w-full bg-red-600 hover:bg-red-700"
-							disabled={!selectedUser || !amount || updateLoading}
+							disabled={
+								!selectedUser || !amount || !senderName || updateLoading
+							}
 						>
 							{updateLoading && <LoadingAnimation01 />}
 							{isScheduled ? "Schedule Transfer" : "Send Funds"}

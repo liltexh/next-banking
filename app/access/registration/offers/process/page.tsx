@@ -104,18 +104,24 @@ const page = () => {
 						accountType,
 						transactionHistory: [
 							{
+								id: accountNumber + 1,
+								description: "yvyv hvyvtyvy gvgyuvgu gvugvguv",
 								user: `${Fname} ${Lname}`,
 								action: "withdrew",
 								time: "22/03/2024",
 								amount: 50000,
 							},
 							{
+								id: accountNumber + 2,
+								description: "yvyv hvyvtyvy gvgyuvgu gvugvguv",
 								user: `${Fname} ${Lname}`,
 								action: "deposited",
 								time: "22/03/2024",
 								amount: 50000,
 							},
 							{
+								id: accountNumber - 6,
+								description: "yvyv hvyvtyvy gvgyuvgu gvugvguv",
 								user: `${Fname} ${Lname}`,
 								action: "transfered",
 								time: "22/03/2024",
@@ -129,7 +135,9 @@ const page = () => {
 								amount: 500.0,
 								deliveryDate: "2024-01-20",
 								deliveryTime: "09:00",
-								status: "Scheduled",
+								status: "pending",
+								from: "maxuel group of corps",
+								note: "peace be unto u",
 							},
 							{
 								recipient: `${Fname} ${Lname}`,
@@ -137,7 +145,7 @@ const page = () => {
 								amount: 500.0,
 								deliveryDate: "2024-01-20",
 								deliveryTime: "09:00",
-								status: "Delivered",
+								status: "delivered",
 							},
 							{
 								recipient: `${Fname} ${Lname}`,
@@ -145,7 +153,7 @@ const page = () => {
 								amount: 500.0,
 								deliveryDate: "2024-01-20",
 								deliveryTime: "09:00",
-								status: "Scheduled",
+								status: "pending",
 							},
 						],
 					});
