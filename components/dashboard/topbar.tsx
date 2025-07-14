@@ -75,7 +75,7 @@ export function Topbar({ type }: TopbarProps) {
 							<span className="text-slate-800 font-medium">
 								{type === "user"
 									? `${userInfo?.Fname} ${userInfo?.Mname} ${userInfo?.Lname}`
-									: "Admin User"}
+									: `${userInfo?.Fname} (Admin)`}
 							</span>
 							<ChevronDown className="w-4 h-4 text-slate-600" />
 						</Button>

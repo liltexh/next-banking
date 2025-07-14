@@ -25,18 +25,19 @@ import {
 import { useUserStore } from "@/store/useUserStore";
 import { useUpdateUserDocument } from "@/hooks/useUpdateUserDocument/useUpdateUserDocument";
 import { arrayUnion } from "firebase/firestore";
+import LoadingAnimation01 from "../LoadingAnimation01";
 
 interface allUsers {
 	[key: string]: any;
 }
 
-const users = [
-	{ id: "1", name: "John Doe", email: "john.doe@email.com" },
-	{ id: "2", name: "Jane Smith", email: "jane.smith@email.com" },
-	{ id: "3", name: "Mike Johnson", email: "mike.johnson@email.com" },
-	{ id: "4", name: "Sarah Wilson", email: "sarah.wilson@email.com" },
-	{ id: "5", name: "David Brown", email: "david.brown@email.com" },
-];
+// const users = [
+// 	{ id: "1", name: "John Doe", email: "john.doe@email.com" },
+// 	{ id: "2", name: "Jane Smith", email: "jane.smith@email.com" },
+// 	{ id: "3", name: "Mike Johnson", email: "mike.johnson@email.com" },
+// 	{ id: "4", name: "Sarah Wilson", email: "sarah.wilson@email.com" },
+// 	{ id: "5", name: "David Brown", email: "david.brown@email.com" },
+// ];
 
 export function AdminSendFunds() {
 	const [selectedUser, setSelectedUser] = useState("");
@@ -86,7 +87,7 @@ export function AdminSendFunds() {
 				email: selectedUser,
 				amount,
 				note,
-				status: isScheduled ? "scheduled" : "delivered",
+				status: isScheduled ? "Scheduled" : "Delivered",
 				deliveryDate: scheduleDate,
 				deliveryTime: scheduleTime,
 			};
@@ -101,6 +102,12 @@ export function AdminSendFunds() {
 				scheduleDate,
 				scheduleTime,
 			});
+			setSelectedUser("");
+			setAmount("");
+			setNote("");
+			setIsScheduled(false);
+			setScheduleDate("");
+			setScheduleTime("");
 		} catch (error) {
 			console.log("error", error);
 		}
@@ -214,9 +221,10 @@ export function AdminSendFunds() {
 
 						<Button
 							type="submit"
-							className="w-full bg-red-600 hover:bg-red-700"
+							className="flex gap-2 w-full bg-red-600 hover:bg-red-700"
 							disabled={!selectedUser || !amount || updateLoading}
 						>
+							{updateLoading && <LoadingAnimation01 />}
 							{isScheduled ? "Schedule Transfer" : "Send Funds"}
 						</Button>
 					</form>

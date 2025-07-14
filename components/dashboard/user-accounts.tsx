@@ -17,7 +17,11 @@ import {
 	CardTitle,
 } from "@/components/dashboard/ui/card";
 import { Search, Eye, Send } from "lucide-react";
-
+import { useEffect, useState } from "react";
+import { useUserStore } from "@/store/useUserStore";
+interface AccountsType {
+	[key: string]: any;
+}
 const users = [
 	{
 		id: "1",
@@ -62,6 +66,30 @@ const users = [
 ];
 
 export function UserAccounts() {
+	const [allAccounts, setAllAccounts] = useState<AccountsType>([]);
+	const { account: adminAccount, loading } = useUserStore();
+	useEffect(() => {
+		const getAccountDetails = () => {
+			if (loading) {
+				console.log("this code is loading");
+				return; // or return a loading spinner
+			}
+			console.log("i am tired very very tired");
+			if (!adminAccount) {
+				console.log("No userAccount found, check database");
+				// Redirect logic can be added here if needed
+			} else {
+				if (adminAccount?.isAdmin) {
+					setAllAccounts(adminAccount?.allAccounts);
+				}
+				console.log("this is all admin account", adminAccount);
+				console.log("and u have gottten all the user accounts", allAccounts);
+			}
+		};
+
+		getAccountDetails();
+		// Cleanup function is not needed here, so return undefined
+	}, [adminAccount, loading]);
 	const getAccountTypeBadge = (type: string) => {
 		switch (type) {
 			case "Premium":
@@ -125,29 +153,32 @@ export function UserAccounts() {
 				<CardContent>
 					<Table>
 						<TableHeader>
-							<TableRow>
+							<TableRow className="max-sm:hidden">
 								<TableHead>Name</TableHead>
 								<TableHead>Email</TableHead>
 								<TableHead>Account Type</TableHead>
-								<TableHead className="text-right">Balance</TableHead>
-								<TableHead>Status</TableHead>
-								<TableHead>Actions</TableHead>
+								<TableHead className="text-right ">Balance</TableHead>
+								{/* <TableHead>Status</TableHead> */}
+								{/* <TableHead>Actions</TableHead> */}
 							</TableRow>
 						</TableHeader>
 						<TableBody>
-							{users.map((user) => (
-								<TableRow key={user.id}>
+							{allAccounts.map((user: any) => (
+								<TableRow
+									key={user.accountNumber}
+									className="max-sm:grid max-sm:grid-cols-2"
+								>
 									<TableCell className="font-medium">{user.name}</TableCell>
 									<TableCell>{user.email}</TableCell>
 									<TableCell>{getAccountTypeBadge(user.accountType)}</TableCell>
 									<TableCell className="text-right font-semibold">
 										$
-										{user.balance.toLocaleString("en-US", {
+										{user.currentBalance.toLocaleString("en-US", {
 											minimumFractionDigits: 2,
 										})}
 									</TableCell>
-									<TableCell>{getStatusBadge(user.status)}</TableCell>
-									<TableCell>
+									{/* <TableCell>{getStatusBadge(user.status)}</TableCell> */}
+									{/* <TableCell>
 										<div className="flex gap-2">
 											<Button
 												variant="outline"
@@ -165,7 +196,7 @@ export function UserAccounts() {
 												Send Funds
 											</Button>
 										</div>
-									</TableCell>
+									</TableCell> */}
 								</TableRow>
 							))}
 						</TableBody>

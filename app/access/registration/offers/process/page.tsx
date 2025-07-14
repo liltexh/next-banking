@@ -1,13 +1,19 @@
 "use client";
+
 import { useAddToFirestore } from "@/hooks/useAddToFirestore/useAddToFirestoreCollection";
 import { useRegisterUser } from "@/hooks/useRegisterUserWithEmail/useRegisterUserWithEmail";
-import { InfoIcon } from "lucide-react";
-import { useSearchParams } from "next/navigation";
+import { InfoIcon, Loader2 } from "lucide-react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useState } from "react";
 
 const page = () => {
 	const searchParams = useSearchParams();
+	const router = useRouter(); // for redirect
 	const accountType = searchParams.get("type");
+
+	const [loading, setLoading] = useState(false);
+	const [showSuccessModal, setShowSuccessModal] = useState(false); // ⭐ Success modal
+
 	const [userInfo, setUserInfo] = useState({
 		Fname: "John",
 		Mname: "A.",
@@ -33,7 +39,6 @@ const page = () => {
 		lastTransaction: 0.0,
 	});
 
-	const [loading, setLoading] = useState(false);
 	const {
 		register,
 		loading: registerLoading,
@@ -46,12 +51,14 @@ const page = () => {
 	} = useAddToFirestore();
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault(); // ✅ prevent page reload
+		e.preventDefault();
 		setLoading(true);
 
 		try {
-			await storeAndRegisterUser();
-			console.log("Done!");
+			const success = await storeAndRegisterUser();
+			if (success) {
+				setShowSuccessModal(true);
+			}
 		} catch (error) {
 			console.error("Error:", error);
 		} finally {
@@ -64,32 +71,33 @@ const page = () => {
 	) => {
 		const { name, value } = e.target;
 		setUserInfo((prev) => ({ ...prev, [name]: value }));
-		console.log(name, value);
 	};
-	const storeAndRegisterUser = async () => {
-		// This function will handle the user registration logic
 
+	const storeAndRegisterUser = async () => {
 		try {
 			const { email, verifyEmail, password, verifyPassword, Fname, Lname } =
 				userInfo;
+
 			if (
 				email &&
-				email == verifyEmail &&
+				email === verifyEmail &&
 				password &&
-				password == verifyPassword
+				password === verifyPassword
 			) {
 				const userAdded = await register(email, password);
 				if (userAdded) {
-					console.log("User Registered Successfully", userAdded);
 					const accountNumber = Math.floor(Math.random() * 10000000000 + 1);
+
 					const userDocAdded = await addDocument("users", {
 						...userInfo,
 						userId: userAdded.user.uid,
 						isAdmin: false,
 						accountNumber,
 					});
+
 					const userAccountAdded = await addDocument("accounts", {
 						...userBankInfo,
+						name: `${Fname} ${Lname}`,
 						userId: userAdded.user.uid,
 						email,
 						accountNumber,
@@ -142,36 +150,44 @@ const page = () => {
 						],
 					});
 
-					userDocAdded &&
-						userAccountAdded &&
-						console.log("User Document Added Successfully", userDocAdded);
+					if (userDocAdded && userAccountAdded) {
+						console.log("Registration Success!");
+						return true;
+					}
 				}
 			} else {
 				throw new Error("Email or Password mismatch");
 			}
-		} catch (error) {}
+		} catch (error) {
+			console.error("Registration error:", error);
+			return false;
+		}
 	};
+
 	return (
 		<div className="main-p main-py">
+			{/* Header */}
 			<div className="bg-primary-500 p-4 text-lg text-white">
 				Application | Globe Trust Banking
 			</div>
-			<div className=" bg-beige-100 p-2 md:p-4 lg:p-8">
+
+			{/* Form Container */}
+			<div className="bg-beige-100 p-2 md:p-4 lg:p-8">
 				<div className="flex flex-col justify-center items-start gap-2 py-8">
 					<h6 className="text-4xl text-primary-500">Your Information</h6>
 					<p className="text-lg text-black/50">
-						Welcome. Apply in Just Minutes{" "}
+						Welcome. Apply in Just Minutes
 					</p>
 				</div>
-				<form
-					onSubmit={handleSubmit}
-					className=""
-				>
+
+				<form onSubmit={handleSubmit}>
+					{/* --- Personal Info --- */}
 					<div className="relative flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pt-16 pb-8 w-full border-b border-black/30">
 						<span className="absolute top-0 left-0 text-lg text-blue-500 w-full flex pt-2">
 							<p>Personal</p>{" "}
 							<span className="ml-auto text-primary-500">* required</span>
 						</span>
+
 						<input
 							type="text"
 							name="Fname"
@@ -208,7 +224,8 @@ const page = () => {
 							onChange={handleChange}
 						/>
 					</div>
-					{/*Contact Info*/}
+
+					{/* --- Contact Info --- */}
 					<div className="w-full flex flex-col border-b border-black/30">
 						<div className="relative flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pt-16 pb-6 w-full">
 							<span className="absolute top-0 left-0 text-lg text-blue-500 w-full flex pt-4">
@@ -269,7 +286,8 @@ const page = () => {
 								onChange={handleChange}
 							/>
 						</div>
-						{/*Extra Contact Info*/}
+
+						{/* --- Extra Info --- */}
 						<div className="relative flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pt-36 pb-6 w-full">
 							<span className="absolute top-0 left-0 w-full flex justify-start items-center gap-2">
 								<span className="flex flex-col gap-2">
@@ -282,14 +300,13 @@ const page = () => {
 										address and password below.
 									</p>
 									<p className="text-xs">
-										⚠️
-										<span className="font-semibold"> Please note: </span> The
-										email address you provide will serve as your secondary
-										account number and will be used for identity verification
-										and account recovery purposes.
+										⚠️<span className="font-semibold"> Please note: </span> This
+										email will be your secondary account number and used for
+										verification.
 									</p>
 								</span>
 							</span>
+
 							<input
 								type="text"
 								name="phoneNumber"
@@ -299,7 +316,6 @@ const page = () => {
 								value={userInfo.phoneNumber}
 								onChange={handleChange}
 							/>
-
 							<input
 								type="text"
 								name="email"
@@ -338,39 +354,8 @@ const page = () => {
 							/>
 						</div>
 					</div>
-					{/*Residency*/}
-					{/* <div className="relative flex flex-col items-start gap-6 pt-16 pb-8 w-full border-b border-black/30">
-						<span className="absolute top-0 left-0 text-lg text-blue-500 w-full flex pt-2">
-							<p>Residency</p>{" "}
-							<span className="ml-auto text-primary-500">* required</span>
-						</span>
-						<div className="flex flex-col justify-start w-fit gap-2">
-							<p>Are you a US Citizen ? *</p>
-							<span className="flex gap-10">
-								<label className="flex justify-start items-center gap-2 text-lg">
-									<input
-										type="radio"
-										name="dualCitizen"
-										required
-										className="w-6 h-6"
-										onChange={handleChange}
-									/>
-									<span>Yes</span>
-								</label>
-								<label className="flex justify-start items-center gap-2 text-lg">
-									<input
-										type="radio"
-										name="dualCitizen"
-										required
-										className="w-6 h-6"
-										onChange={handleChange}
-									/>
-									<span>No</span>
-								</label>
-							</span>
-						</div>
-					</div> */}
-					{/*Employment And Finances*/}
+
+					{/* --- Employment Info --- */}
 					<div className="relative flex flex-col items-start gap-6 pt-16 pb-8 w-full border-b border-black/30">
 						<span className="absolute top-0 left-0 text-lg text-blue-500 w-full flex pt-2">
 							<p>Employment & finances</p>{" "}
@@ -400,22 +385,46 @@ const page = () => {
 							onChange={handleChange}
 						/>
 					</div>
+
+					{/* --- Consent & Submit --- */}
 					<div className="relative flex flex-col gap-6 pt-16 pb-8 w-full">
 						<p>
-							By selecting Continue, you authorize us to obtain a credit report
-							or other report or account information from credit or information
-							services agencies to help verify the information you provide in
-							this application; for consideration of other accounts and
-							services, and for any other lawful purpose. If your information
-							does not meet certain qualifications, you will not be able to
-							proceed with your application at this time.
+							By selecting Continue, you authorize us to obtain a credit
+							report... and for any other lawful purpose.
 						</p>
-						<button className="bg-blue-500 text-white text-xl p-3 px-10 lg:w-fit">
-							Continue
+						<button
+							type="submit"
+							disabled={loading}
+							className="bg-blue-500 text-white text-xl p-3 px-10 lg:w-fit flex items-center gap-2 disabled:opacity-60"
+						>
+							{loading && <Loader2 className="animate-spin w-5 h-5" />}
+							{loading ? "Processing..." : "Continue"}
 						</button>
 					</div>
 				</form>
 			</div>
+
+			{/* ⭐ Optional: Success Modal */}
+			{showSuccessModal && (
+				<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+					<div className="bg-white shadow-lg p-6 max-w-lg text-center">
+						<h2 className="text-2xl font-semibold text-primary-500 mb-4">
+							Application Submitted
+						</h2>
+						<p className="text-gray-700 text-md">
+							Thank you for applying! Your account will be created and approved
+							within <strong>2 business days</strong>. You will receive a
+							confirmation email once it's ready.
+						</p>
+						<button
+							className="mt-6 bg-blue-500 text-white px-6 py-2 rounded-md"
+							onClick={() => router.push("/")}
+						>
+							Okay
+						</button>
+					</div>
+				</div>
+			)}
 		</div>
 	);
 };

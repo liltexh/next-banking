@@ -18,6 +18,7 @@ import {
 import { Edit, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useUserStore } from "@/store/useUserStore";
+import { useUpdateUserDocument } from "@/hooks/useUpdateUserDocument/useUpdateUserDocument";
 interface scheduleType {
 	[key: string]: any;
 }
@@ -62,6 +63,8 @@ const scheduledTransfers = [
 
 export function ScheduledTransfers() {
 	const [scheduledDetails, setScheduledDetails] = useState<scheduleType>();
+	const { update: updateAUserDocument, loading: updateLoading } =
+		useUpdateUserDocument();
 	const { account: adminAccount, loading } = useUserStore();
 	useEffect(() => {
 		const getAccountDetails = () => {
@@ -84,6 +87,27 @@ export function ScheduledTransfers() {
 		getAccountDetails();
 		// Cleanup function is not needed here, so return undefined
 	}, [adminAccount, loading]);
+
+	const handleCancel = async (targetEmail: string) => {
+		// Handle admin send funds logic here
+		const updatePendingTransfers = scheduledDetails?.filter(
+			(user: any) => user.email != targetEmail
+		);
+		// if (true) {
+		// 	console.error("no such transfer was found in sceduled transfer");
+		// 	return;
+		// }
+		try {
+			await updateAUserDocument("accounts", targetEmail, {
+				pendingTransfers: updatePendingTransfers,
+			});
+			console.log("Admin deleted pending funds succesfully");
+			setScheduledDetails(updatePendingTransfers);
+		} catch (error) {
+			console.log("error", error);
+		}
+	};
+
 	const getStatusBadge = (status: string) => {
 		return status === "Scheduled" ? (
 			<Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100">
@@ -171,6 +195,9 @@ export function ScheduledTransfers() {
 														Edit
 													</Button> */}
 													<Button
+														onClick={() => {
+															handleCancel(transfer.email);
+														}}
 														variant="outline"
 														size="sm"
 														className="text-red-600 hover:text-red-700"

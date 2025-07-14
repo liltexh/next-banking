@@ -9,6 +9,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation"; // ✅ App Router version
 import { useFirestoreDocument } from "@/hooks/useFirestoreDocument/useFirestoreDocument";
 import { useUserStore } from "@/store/useUserStore";
+import LoadingAnimation01 from "@/components/LoadingAnimation01";
 
 // type profile = {
 // 	isAdmin: boolean;
@@ -46,7 +47,14 @@ export default function Home() {
 
 	// while waiting for Zustand auth logic
 	if (loading) {
-		return <div className="p-4">Loading dashboard...</div>;
+		return (
+			<div className="p-4">
+				<p>Loading dashboard...</p>
+				<span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-red-600 w-20 aspect-square p-4 ">
+					<LoadingAnimation01 className="w-full h-full border-4" />
+				</span>
+			</div>
+		);
 	}
 
 	return (
