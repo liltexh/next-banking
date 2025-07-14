@@ -2,12 +2,25 @@ import ManagementTeam from "@/components/ManagementTeam";
 import QandA from "@/components/QandA";
 import SubHero from "@/components/SubHero";
 import Testimonials from "@/components/Testimonials";
-import { Group, Home, HomeIcon, Plus } from "lucide-react";
+import {
+	Award,
+	Banknote,
+	Group,
+	Handshake,
+	Home,
+	HomeIcon,
+	Plus,
+	ShieldCheck,
+	Star,
+	TrendingUp,
+	Trophy,
+	Users,
+} from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
 type ad = {
-	image: string;
+	image: any;
 	heading: string;
 	prev: string;
 };
@@ -22,33 +35,34 @@ type awards = {
 const BRIEF: ad[] = [
 	{
 		image: "/images/intro-about-1.jpg",
-		heading: "lorern jnwifi",
-		prev: "Over Four Decades Of Banking",
+		heading: "Established Legacy in Financial Services",
+		prev: "Over four decades of consistent, customer-focused banking excellence.",
 	},
 	{
 		image: "/images/intro-about-2.jpg",
-		heading: "lorern jnwifi",
-		prev: "Passion & Professional Management",
+		heading: "Driven by Expertise and Commitment",
+		prev: "Fueled by passion and guided by professional, trusted management.",
 	},
 ];
 
 const BRIEF02: ad[] = [
 	{
-		image: "/history-img-02.jpg",
-		heading: "lorern jnwifi",
-		prev: "dveve evevev",
+		image: Trophy, // Represents success and recognition
+		heading: "Award-Winning Excellence",
+		prev: "Recognized globally for innovation and customer satisfaction.",
 	},
 	{
-		image: "/history-img-02.jpg",
-		heading: "lorern jnwifi",
-		prev: "dveve evevev",
+		image: Handshake, // Represents trust and partnership
+		heading: "Trusted Financial Partner",
+		prev: "Committed to building lasting relationships through transparency and trust.",
 	},
 	{
-		image: "/history-img-02.jpg",
-		heading: "lorern jnwifi",
-		prev: "dveve evevev",
+		image: ShieldCheck, // Represents security and reliability
+		heading: "Secure & Dependable",
+		prev: "Protecting your wealth with cutting-edge security and peace of mind.",
 	},
 ];
+
 // const STATEMENT: ad[] = [
 // 	{
 // 		image: "/history-img-02.jpg",
@@ -66,35 +80,60 @@ const BRIEF02: ad[] = [
 // 		prev: "dveve evevev",
 // 	},
 // ];
-const ACHIVEMENTS: ad[] = [
+const ACHIEVEMENTS: { icon: any; heading: string; prev: string }[] = [
 	{
-		image: "/history-img-02.jpg",
-		heading: "lorern jnwifi",
-		prev: "dveve evevev",
+		icon: ShieldCheck,
+		heading: "Trusted by Thousands",
+		prev: "Our bank has consistently earned the trust of individuals and businesses for over 40 years.",
 	},
 	{
-		image: "/history-img-02.jpg",
-		heading: "lorern jnwifi",
-		prev: "dveve evevev",
+		icon: TrendingUp,
+		heading: "Consistent Growth",
+		prev: "We’ve maintained year-over-year growth across all key banking metrics and customer satisfaction.",
 	},
 	{
-		image: "/history-img-02.jpg",
-		heading: "lorern jnwifi",
-		prev: "dveve evevev",
+		icon: Users,
+		heading: "Global Customer Base",
+		prev: "Serving over 5 million customers worldwide with tailored financial solutions.",
 	},
 	{
-		image: "/history-img-02.jpg",
-		heading: "lorern jnwifi",
-		prev: "dveve evevev",
+		icon: Banknote,
+		heading: "Billions in Assets Managed",
+		prev: "Successfully managing portfolios and deposits worth billions in local and international currencies.",
 	},
 ];
 
-const AWARDS: awards[] = [
-	{ icon: "#", name: "usd", year: "lorem", by: "jbsjc jhbcb " },
-	{ icon: "#", name: "sek", year: "lorem", by: "jbsjc jhbcb " },
-	{ icon: "#", name: "gbp", year: "lorem", by: "jbsjc jhbcb " },
-	{ icon: "#", name: "jpy", year: "lorem", by: "jbsjc jhbcb " },
-	{ icon: "#", name: "aud", year: "lorem", by: "jbsjc jhbcb " },
+const AWARDS = [
+	{
+		icon: Trophy,
+		name: "Best Digital Bank",
+		year: "2024",
+		by: "Global Finance Awards",
+	},
+	{
+		icon: Award,
+		name: "Most Innovative Fintech",
+		year: "2023",
+		by: "World Financial Summit",
+	},
+	{
+		icon: Star,
+		name: "Top Customer Experience",
+		year: "2023",
+		by: "Fintech Customer Choice Awards",
+	},
+	{
+		icon: ShieldCheck,
+		name: "Excellence in Security",
+		year: "2022",
+		by: "CyberSafe International",
+	},
+	{
+		icon: Banknote,
+		name: "Emerging Bank of the Year",
+		year: "2021",
+		by: "Forbes Africa Banking Awards",
+	},
 ];
 
 const Page = () => {
@@ -144,7 +183,7 @@ const Page = () => {
 											{b.heading}
 										</p>
 									</span>
-									<p className="text-2xl  mt-4">{b.prev}</p>
+									<p className="mt-4">{b.prev}</p>
 								</div>
 							);
 						})}
@@ -153,6 +192,7 @@ const Page = () => {
 			</section>
 			<section className="flex flex-col lg:grid grid-cols-3 w-full justify-between items-center gap-16 lg:gap-0 main-p main-py">
 				{BRIEF02.map((b, idx: number) => {
+					const Icon = b.image;
 					return (
 						<div
 							className="flex flex-col justify-center items-center lg:border-r border-black/30 last:border-r-0 gap-6"
@@ -161,10 +201,13 @@ const Page = () => {
 							<span
 								className={`relative w-20 flex justify-center items-center aspect-square rounded-tr-2xl rounded-bl-2xl shadow-lg   font-semibold before:absolute before:content-['02'] before:bg-beige-100 before:w-10 before:aspect-square before:-top-8 before:-left-10 before:rounded-tr-2xl before:rounded-bl-2xl before:text-black/50 text-xl before:flex before:items-center before:justify-center`}
 							>
-								<Group size={48} />
+								<Icon
+									size={48}
+									className="text-gray-600"
+								/>
 							</span>
 							<h5 className="text-lg">{b.heading}</h5>
-							<p className="text-black/30 text-lg">{b.prev}</p>
+							<p className="text-black/30 text-center">{b.prev}</p>
 						</div>
 					);
 				})}
@@ -186,23 +229,26 @@ const Page = () => {
 							alt=" w-full h-full"
 						/>
 					</div>
-					<div className="flex-1 flex flex-col gap-8 p-14 text-white bg-gradient-to-r from-primary-600 to-primary-500 w-full h-full">
+					<div className="flex-1 flex flex-col gap-6 p-14 text-white bg-gradient-to-r from-primary-600 to-primary-500 w-full h-full">
 						<h5 className="text-5xl font-semibold">
-							A Great Mission Statement
+							A Mission Built on Trust, Growth & Service
 						</h5>
 						<p>
-							Obligations of business it will frequently occur that pleasures
-							have to be repudiated and annoyances accepted. The wise man always
-							holds these matters to this principle of selection rejects
-							pleasures to secure other greater pleasures.
+							In the ever-evolving world of finance, we believe that true
+							progress comes from making bold, ethical choices. While short-term
+							gains may be tempting, we prioritize long-term value, customer
+							trust, and responsible growth. Our mission is to empower
+							individuals and businesses by offering reliable banking solutions
+							that align with their goals and aspirations.
 						</p>
-						<button className="text-xl flex  gap-2 items-end">
+
+						{/* <button className="text-xl flex  gap-2 items-end">
 							<Link href="#">Read More</Link>
 							<Plus
 								className="w-4.5"
 								strokeWidth={3}
 							/>
-						</button>
+						</button> */}
 					</div>
 				</div>
 			</section>
@@ -214,14 +260,15 @@ const Page = () => {
 					</p>
 				</div>
 				<div className="flex flex-col lg:flex-row gap-8">
-					{ACHIVEMENTS.map((achivement, idx) => {
+					{ACHIEVEMENTS.map((achivement, idx) => {
+						const Icon = achivement.icon;
 						return (
 							<div
 								className="flex flex-col justify-center items-center gap-8 w-full"
 								key={idx}
 							>
 								<span className="w-32 aspect-square rounded-full flex justify-center items-center border border-white/70">
-									<Home />
+									<Icon className="w-10 h-10" />
 								</span>
 
 								<div className="flex flex-col gap-4">
@@ -239,12 +286,15 @@ const Page = () => {
 						Better Value Banking Experience
 					</h5>
 					<p>
-						Business it will frequently occur that pleasures have to be
-						repudiated and annoyances accepted. The wise man therefore always
-						holds these matters to this principle of selection.
+						We believe banking should be simple, rewarding, and built around
+						your needs. That’s why we offer competitive rates, personalized
+						service, and seamless digital tools—ensuring you get more value from
+						every transaction, every time. Experience financial services
+						designed to help you grow with confidence.
 					</p>
+
 					<div className="flex gap-4">
-						<span>Download</span>
+						{/* <span>Download</span> */}
 						<span>Report for 2024</span>
 					</div>
 				</div>
@@ -260,6 +310,7 @@ const Page = () => {
 				<div></div>
 				<div className="flex flex-col gap-8 lg:grid grid-cols-3 grid-rows-2 text-center text-black">
 					{AWARDS.map((award, idx) => {
+						const Icon = award.icon;
 						return idx == 1 ? (
 							<div
 								className="row-span-2 relative"
@@ -277,7 +328,7 @@ const Page = () => {
 							>
 								<div className="flex gap-4 justify-start items-center w-full border-b">
 									<span className="w-14 aspect-square flex justify-center items-center">
-										<HomeIcon />
+										<Icon className="w-6 h-6" />
 									</span>
 									<p className="text-xl">{award.name}</p>
 								</div>

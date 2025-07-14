@@ -30,7 +30,7 @@ export function Sidebar({
 	const [deviceType, setDeviceType] = useState("");
 	const userNavItems = [
 		{ id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
-		{ id: "deposit", label: "Deposit Funds", icon: ArrowDownToLine },
+		// { id: "deposit", label: "Deposit Funds", icon: ArrowDownToLine },
 		{ id: "withdraw", label: "Withdraw Funds", icon: ArrowUpFromLine },
 		{ id: "send", label: "Send Money", icon: Send },
 		{ id: "history", label: "Transaction History", icon: History },

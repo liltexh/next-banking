@@ -84,8 +84,8 @@ export function Topbar({ type }: TopbarProps) {
 						align="end"
 						className="w-48"
 					>
-						<DropdownMenuItem>Profile Settings</DropdownMenuItem>
-						<DropdownMenuItem>Account Preferences</DropdownMenuItem>
+						{/* <DropdownMenuItem>Profile Settings</DropdownMenuItem>
+						<DropdownMenuItem>Account Preferences</DropdownMenuItem> */}
 						{type === "admin" && (
 							<>
 								<DropdownMenuSeparator />

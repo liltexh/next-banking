@@ -77,8 +77,6 @@ export function DepositFunds() {
 					</CardContent>
 				</Card>
 			</div>
-			{/* 🔥 Show error message conditionally */}
-			<TransferError amount={amount} />
 		</>
 	);
 }

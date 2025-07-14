@@ -9,61 +9,60 @@ type tst = {
 	profileName: string;
 	country: string;
 };
-
 const TESTIMONIALS: tst[] = [
 	{
-		star: 4,
-		date: "febuary 23 2024",
+		star: 5,
+		date: "February 23, 2024",
 		context:
-			"Experience with Finbank has been very accommodating forthey have online banking. When I need to transfer funds and pay bills it can be done at ...",
-		profile: "/images/statements-2.jpg",
+			"GlobeTrust’s mobile and online banking are so easy to use. I can transfer money and manage my accounts with just a few taps, even while traveling.",
+		profile: "/images/testimonial-1.jpg",
 		profileName: "Nathan Felix",
-		country: "carlifonia",
+		country: "California, USA",
 	},
 	{
 		star: 4,
-		date: "febuary 23 2024",
+		date: "March 15, 2024",
 		context:
-			"Experience with Finbank has been very accommodating forthey have online banking. When I need to transfer funds and pay bills it can be done at ...",
-		profile: "/images/statements-2.jpg",
-		profileName: "Nathan Felix",
-		country: "carlifonia",
+			"I’ve been with GlobeTrust for over a decade. Their customer support is prompt and genuinely helpful — it feels like a bank that truly listens.",
+		profile: "/images/testimonial-2.jpg",
+		profileName: "Maria Gonzalez",
+		country: "Madrid, Spain",
+	},
+	{
+		star: 5,
+		date: "April 3, 2024",
+		context:
+			"Opening my account with GlobeTrust was fast and seamless. I also love how transparent they are with rates and charges.",
+		profile: "/images/testimonial-3.jpg",
+		profileName: "Adewale Johnson",
+		country: "Lagos, Nigeria",
 	},
 	{
 		star: 4,
-		date: "febuary 23 2024",
+		date: "May 10, 2024",
 		context:
-			"Experience with Finbank has been very accommodating forthey have online banking. When I need to transfer funds and pay bills it can be done at ...",
-		profile: "/images/statements-2.jpg",
-		profileName: "Nathan Felix",
-		country: "carlifonia",
+			"The exchange rate services from GlobeTrust helped me save significantly while sending money abroad. Very competitive and easy to use!",
+		profile: "/images/testimonial-4.jpg",
+		profileName: "Sophie Lee",
+		country: "Seoul, South Korea",
+	},
+	{
+		star: 5,
+		date: "June 1, 2024",
+		context:
+			"Reliable, secure, and straightforward — GlobeTrust makes digital banking feel truly personal and efficient. I wouldn’t bank anywhere else.",
+		profile: "/images/testimonial-5.jpg",
+		profileName: "Lucas Meyer",
+		country: "Berlin, Germany",
 	},
 	{
 		star: 4,
-		date: "febuary 23 2024",
+		date: "July 5, 2024",
 		context:
-			"Experience with Finbank has been very accommodating forthey have online banking. When I need to transfer funds and pay bills it can be done at ...",
-		profile: "/images/statements-2.jpg",
-		profileName: "Nathan Felix",
-		country: "carlifonia",
-	},
-	{
-		star: 4,
-		date: "febuary 23 2024",
-		context:
-			"Experience with Finbank has been very accommodating forthey have online banking. When I need to transfer funds and pay bills it can be done at ...",
-		profile: "/images/statements-2.jpg",
-		profileName: "Nathan Felix",
-		country: "carlifonia",
-	},
-	{
-		star: 4,
-		date: "febuary 23 2024",
-		context:
-			"Experience with Finbank has been very accommodating forthey have online banking. When I need to transfer funds and pay bills it can be done at ...",
-		profile: "/images/statements-2.jpg",
-		profileName: "Nathan Felix",
-		country: "carlifonia",
+			"Their scheduled transfers feature helps me automate payments easily. Plus, their app design is very intuitive and clean.",
+		profile: "/images/testimonial-6.jpg",
+		profileName: "Aisha Rahman",
+		country: "Dubai, UAE",
 	},
 ];
 

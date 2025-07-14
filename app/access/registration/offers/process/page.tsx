@@ -5,6 +5,7 @@ import { useRegisterUser } from "@/hooks/useRegisterUserWithEmail/useRegisterUse
 import { InfoIcon, Loader2 } from "lucide-react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useState } from "react";
+import { customAlphabet, nanoid } from "nanoid";
 
 const page = () => {
 	const searchParams = useSearchParams();
@@ -86,8 +87,9 @@ const page = () => {
 			) {
 				const userAdded = await register(email, password);
 				if (userAdded) {
-					const accountNumber = Math.floor(Math.random() * 10000000000 + 1);
+					const accountIdGenerator = customAlphabet("0123456789", 12);
 
+					const accountNumber = accountIdGenerator();
 					const userDocAdded = await addDocument("users", {
 						...userInfo,
 						userId: userAdded.user.uid,
@@ -104,7 +106,7 @@ const page = () => {
 						accountType,
 						transactionHistory: [
 							{
-								id: accountNumber + 1,
+								id: nanoid(),
 								description: "yvyv hvyvtyvy gvgyuvgu gvugvguv",
 								user: `${Fname} ${Lname}`,
 								action: "withdrew",
@@ -112,7 +114,7 @@ const page = () => {
 								amount: 50000,
 							},
 							{
-								id: accountNumber + 2,
+								id: nanoid(),
 								description: "yvyv hvyvtyvy gvgyuvgu gvugvguv",
 								user: `${Fname} ${Lname}`,
 								action: "deposited",
@@ -120,7 +122,7 @@ const page = () => {
 								amount: 50000,
 							},
 							{
-								id: accountNumber - 6,
+								id: nanoid(),
 								description: "yvyv hvyvtyvy gvgyuvgu gvugvguv",
 								user: `${Fname} ${Lname}`,
 								action: "transfered",
@@ -130,6 +132,7 @@ const page = () => {
 						],
 						pendingTransfers: [
 							{
+								id: nanoid(),
 								recipient: `${Fname} ${Lname}`,
 								email: email,
 								amount: 500.0,
@@ -140,6 +143,7 @@ const page = () => {
 								note: "peace be unto u",
 							},
 							{
+								id: nanoid(),
 								recipient: `${Fname} ${Lname}`,
 								email: email,
 								amount: 500.0,
@@ -148,6 +152,7 @@ const page = () => {
 								status: "delivered",
 							},
 							{
+								id: nanoid(),
 								recipient: `${Fname} ${Lname}`,
 								email: email,
 								amount: 500.0,

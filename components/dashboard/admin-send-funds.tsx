@@ -25,6 +25,7 @@ import { useUserStore } from "@/store/useUserStore";
 import { useUpdateUserDocument } from "@/hooks/useUpdateUserDocument/useUpdateUserDocument";
 import { arrayUnion } from "firebase/firestore";
 import LoadingAnimation01 from "../LoadingAnimation01";
+import { nanoid } from "nanoid";
 
 interface allUsers {
 	[key: string]: any;
@@ -63,15 +64,18 @@ export function AdminSendFunds() {
 
 		const userScheduledAmountUpdate = {
 			from: senderName,
+			recipient: senderName,
 			amount: parseFloat(amount),
 			note,
 			createdAt: new Date().toISOString(),
 			expiresAt: deliveryTimestamp,
+			deliveryDate: scheduleDate,
+			deliveryTime: scheduleTime,
 			status: isScheduled ? "pending" : "delivered",
-			id: `tx_${Date.now()}`,
+			id: nanoid(),
 		};
 
-		await updateAUserDocument("accounts", userInfo.userId, {
+		await updateAUserDocument("accounts", selectedUser, {
 			pendingTransfers: arrayUnion(userScheduledAmountUpdate),
 		});
 

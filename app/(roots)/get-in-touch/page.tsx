@@ -36,7 +36,7 @@ const page = () => {
 		<>
 			<SubHero
 				texts="Get in Touch"
-				image="/history-img-02.jpg"
+				image="/images/breadcrumb-area-bg-6.jpg"
 			/>
 			<section className="main-p main-py ">
 				<div className="w-full flex flex-col lg:flex-row gap-x-16 bg-beige-100">

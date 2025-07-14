@@ -88,28 +88,31 @@ export function ScheduledTransfers() {
 		// Cleanup function is not needed here, so return undefined
 	}, [adminAccount, loading]);
 
-	const handleCancel = async (targetEmail: string) => {
-		// Handle admin send funds logic here
-		const updatePendingTransfers = scheduledDetails?.filter(
-			(user: any) => user.email != targetEmail
-		);
-		// if (true) {
-		// 	console.error("no such transfer was found in sceduled transfer");
-		// 	return;
-		// }
+	const handleCancel = async (email: string, transferId: string) => {
 		try {
-			await updateAUserDocument("accounts", targetEmail, {
-				pendingTransfers: updatePendingTransfers,
+			// Filter out the cancelled transfer using its unique ID
+			const updatedTransfers = scheduledDetails?.filter(
+				(item: any) => !(item.email === email && item.id === transferId)
+			);
+
+			// Update the Firestore doc of the specific user
+			const userTransfers =
+				updatedTransfers?.filter((item: any) => item.email === email) || [];
+
+			await updateAUserDocument("accounts", email, {
+				pendingTransfers: userTransfers,
 			});
-			console.log("Admin deleted pending funds succesfully");
-			setScheduledDetails(updatePendingTransfers);
+
+			// Update UI
+			setScheduledDetails(updatedTransfers);
+			console.log("Transfer cancelled successfully.");
 		} catch (error) {
-			console.log("error", error);
+			console.error("Error cancelling transfer:", error);
 		}
 	};
 
 	const getStatusBadge = (status: string) => {
-		return status === "Scheduled" ? (
+		return status === "Scheduled" || "pending" ? (
 			<Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100">
 				Scheduled
 			</Badge>
@@ -157,7 +160,7 @@ export function ScheduledTransfers() {
 						<TableBody>
 							{scheduledDetails?.map((transfer: any, idx: number) => (
 								<TableRow
-									key={idx}
+									key={transfer.id}
 									className="max-sm:flex max-sm:flex-col justify-center items-start"
 								>
 									<TableCell>
@@ -185,7 +188,7 @@ export function ScheduledTransfers() {
 
 									<TableCell>
 										<div className="flex gap-2">
-											{transfer.status === "Scheduled" && (
+											{transfer.status === "pending" && (
 												<>
 													{/* <Button
 														variant="outline"
@@ -196,7 +199,7 @@ export function ScheduledTransfers() {
 													</Button> */}
 													<Button
 														onClick={() => {
-															handleCancel(transfer.email);
+															handleCancel(transfer.email, transfer.id);
 														}}
 														variant="outline"
 														size="sm"

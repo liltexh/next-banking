@@ -5,47 +5,46 @@ type tst = {
 	name: string;
 	position: string;
 };
-
 const TEAMS: tst[] = [
 	{
 		image: "/images/team-v1-1.jpg",
-		name: "diji hsihis iscjsicjhi",
-		position: "yfbvwuf uwfhfuih",
+		name: "Davis Carter",
+		position: "Chief Executive Officer",
 	},
 	{
 		image: "/images/team-v1-3.jpg",
-		name: "diji hsihis iscjsicjhi",
-		position: "yfbvwuf uwfhfuih",
+		name: "Michiel Thompson",
+		position: "Chief Operating Officer",
 	},
 	{
 		image: "/images/team-v1-4.jpg",
-		name: "diji hsihis iscjsicjhi",
-		position: "yfbvwuf uwfhfuih",
+		name: "Hans Müller",
+		position: "Chief Technology Officer",
 	},
 	{
 		image: "/images/team-v1-5.jpg",
-		name: "diji hsihis iscjsicjhi",
-		position: "yfbvwuf uwfhfuih",
+		name: "James Robinson",
+		position: "Chief Financial Officer",
 	},
 	{
 		image: "/images/team-v1-6.jpg",
-		name: "diji hsihis iscjsicjhi",
-		position: "yfbvwuf uwfhfuih",
+		name: "Davis Chen",
+		position: "Head of Corporate Banking",
 	},
 	{
 		image: "/images/team-v1-7.jpg",
-		name: "diji hsihis iscjsicjhi",
-		position: "yfbvwuf uwfhfuih",
+		name: "Manuel Becker",
+		position: "Head of Risk & Compliance",
 	},
 	{
 		image: "/images/team-v1-8.jpg",
-		name: "diji hsihis iscjsicjhi",
-		position: "yfbvwuf uwfhfuih",
+		name: "Liam Anderson",
+		position: "Head of Digital Strategy",
 	},
 	{
 		image: "/images/team-v1-1.jpg",
-		name: "diji hsihis iscjsicjhi",
-		position: "yfbvwuf uwfhfuih",
+		name: "Simon Laurent",
+		position: "Head of Wealth Management",
 	},
 ];
 

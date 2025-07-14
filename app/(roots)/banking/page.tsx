@@ -2,6 +2,7 @@ import React from "react";
 import { ArrowRight, PersonStandingIcon } from "lucide-react";
 import Link from "next/link";
 import SubHero from "@/components/SubHero";
+import { cn } from "@/lib/utils";
 
 type accountOption = {
 	header: string;
@@ -12,6 +13,7 @@ type accountOption = {
 	beneficts: string;
 	intrest: number;
 	link: string;
+	image?: string;
 };
 
 type steps = {
@@ -31,6 +33,7 @@ const ACCOUNT_OPTIONS: accountOption[] = [
 		beneficts: "Earn interest on your savings, no monthly fees.",
 		intrest: 1.5,
 		link: "access/registration/offers/process?type=savings",
+		image: "images/account-1.jpg",
 	},
 	{
 		header: "Flexible Daily Transactions",
@@ -41,6 +44,7 @@ const ACCOUNT_OPTIONS: accountOption[] = [
 		beneficts: "Unlimited transactions, debit card access.",
 		intrest: 0,
 		link: "access/registration/offers/process?type=checkings",
+		image: "images/account-2.jpg",
 	},
 	{
 		header: "Fixed Rate Savings Plan",
@@ -51,6 +55,7 @@ const ACCOUNT_OPTIONS: accountOption[] = [
 		beneficts: "Higher interest rates than regular savings accounts.",
 		intrest: 2.5,
 		link: "access/registration/offers/process?type=fixed",
+		image: "images/account-3.jpg",
 	},
 	{
 		header: "Shared Expenses Management",
@@ -62,6 +67,7 @@ const ACCOUNT_OPTIONS: accountOption[] = [
 		beneficts: "Manage shared expenses easily.",
 		intrest: 0.5,
 		link: "access/registration/offers/process?type=joint",
+		image: "/images/statements-3.jpg",
 	},
 	{
 		header: "Business Financial Management",
@@ -72,6 +78,7 @@ const ACCOUNT_OPTIONS: accountOption[] = [
 		beneficts: "Business transactions, payroll services.",
 		intrest: 0.1,
 		link: "access/registration/offers/process?type=corporate",
+		image: "/images/statements-1.jpg",
 	},
 	{
 		header: "Investments Buying and Selling",
@@ -82,48 +89,47 @@ const ACCOUNT_OPTIONS: accountOption[] = [
 		beneficts: "Access to stock markets and investment opportunities.",
 		intrest: 0,
 		link: "access/registration/offers/process?type=brokerage",
+		image: "/images/statements-2.jpg",
 	},
 ];
-
 const STEPS_TO_ACCOUNT: steps[] = [
 	{
-		icon: "",
-		heading: "hvah uagdbu aidhia aibhdia",
+		icon: "/icons/account-form.svg",
+		heading: "Fill Out the Online Application",
 		context:
-			"ii iahdi idbhiah iahdihai diahid jbu jbj jbvj xrsr jhih gyv hftdrdy jbhuih jbugtctfvy kion jbhutcg buhilm",
-
-		bgColor: "skyBlue",
+			"Start by completing a simple online form with your personal details, contact information, and desired account type.",
+		bgColor: "#87ceeb", // "skyBlue", //  or similar
 	},
 	{
-		icon: "",
-		heading: "hvah uagdbu aidhia aibhdia",
+		icon: "/icons/id-verification.svg",
+		heading: "Verify Your Identity",
 		context:
-			"ii iahdi idbhiah iahdihai diahid jbu jbj jbvj xrsr jhih gyv hftdrdy jbhuih jbugtctfvy kion jbhutcg buhilm",
-
-		bgColor: "skyBlue",
+			"Upload a valid government-issued ID and a recent utility bill or bank statement to confirm your identity and address.",
+		bgColor: "#008080", //"teal", //
 	},
 	{
-		icon: "",
-		heading: "hvah uagdbu aidhia aibhdia",
+		icon: "/icons/fund-account.svg",
+		heading: "Fund Your New Account",
 		context:
-			"ii iahdi idbhiah iahdihai diahid jbu jbj jbvj xrsr jhih gyv hftdrdy jbhuih jbugtctfvy kion jbhutcg buhilm",
-
-		bgColor: "skyBlue",
+			"Make your first deposit using a debit card, bank transfer, or other accepted methods to activate your account.",
+		bgColor: "#90ee90", //"lightGreen", //
 	},
 	{
-		icon: "",
-		heading: "hvah uagdbu aidhia aibhdia",
+		icon: "/icons/welcome-banking.svg",
+		heading: "Start Banking Instantly",
 		context:
-			"ii iahdi idbhiah iahdihai diahid jbu jbj jbvj xrsr jhih gyv hftdrdy jbhuih jbugtctfvy kion jbhutcg buhilm",
-
-		bgColor: "skyBlue",
+			"Once approved, you’ll receive a confirmation and can begin managing your finances via web or mobile banking.",
+		bgColor: "#e6e6fa", // "lavender",
 	},
 ];
 
 const page = () => {
 	return (
 		<>
-			<SubHero texts="Banking" />
+			<SubHero
+				texts="Banking"
+				image="/images/breadcrumb-area-bg-3.jpg"
+			/>
 			<section className="flex flex-col gap-16 main-p main-py">
 				<div className="flex flex-col justify-center items-center">
 					<h1 className="main-h4-01">Account Options</h1>
@@ -137,7 +143,7 @@ const page = () => {
 								className="relative flex flex-col shadow-md z-0 p-10 min-h-[540px]"
 							>
 								<img
-									src="/images/statements-1.jpg"
+									src={option.image}
 									alt=""
 									className="absolute inset-0 object-cover w-full h-full grayscale -z-50"
 								/>
@@ -213,10 +219,19 @@ const page = () => {
 						return (
 							<div
 								key={idx}
-								className="relative w-fit m-auto after:absolute after:content-[''] after:w-full after:h-full after:top-2.5 after:left-2.5 after:-right-2.5 after:-bottom-2.5 after:border after:border-teal-300 after:-z-10"
+								className={cn(
+									"relative w-fit h-full m-auto after:absolute after:content-[''] after:w-full after:h-full after:top-2.5 after:left-2.5 after:-right-2.5 after:-bottom-2.5 after:border after:-z-10  after:border-teal-300"
+								)}
 							>
 								<div
-									className={`relative flex flex-col w-2xs z-0 p-10 bg-teal-300 text-white overflow-hidden  before:absolute before:content-['hello'] before:top-0 before:right-0 before:rotate-45 before:translate-x-24 before:translate-y-4 before:bg-white before:w-full before:py-2 before:text-center before:font-semibold before:z-50 before:text-black `}
+									className="relative flex flex-col w-2xs z-0 p-10 
+bg-gradient-to-b from-teal-600 to-teal-300 
+text-white overflow-hidden h-full 
+before:absolute before:content-['Steps'] before:top-0 before:right-0 
+before:rotate-45 before:translate-x-24 before:translate-y-4 
+before:bg-white before:w-full before:py-2 before:text-center 
+before:font-semibold before:z-50 before:text-black
+"
 								>
 									<div className="flex flex-col gap-4 justify-center items-start border-b-2 border-white">
 										<span>

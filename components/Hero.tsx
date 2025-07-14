@@ -23,21 +23,22 @@ const BANK_CATEGORIES: bankCategories[] = [
 	{
 		type: "Fixed Deposit",
 		heading: "Fixed Returns with Peace of Mind",
-		preview: "Must explain to you how work mistaken give you complete guide.",
+		preview:
+			"Enjoy guaranteed returns with zero risk. Secure your future with fixed deposits that grow steadily over time.",
 		link: "#",
 	},
 	{
 		type: "Current Account",
 		heading: "Banking Solutions for a Business",
 		preview:
-			"No one rejects dislikes avoids pleasures because it is pleasure trivial.",
+			"Manage your business finances with ease. Get fast access, flexible limits, and tools tailored to support your operations.",
 		link: "#",
 	},
 	{
 		type: "Mutual Funds",
 		heading: "Our Strategies for Better Returns",
 		preview:
-			"Except obtain some advantages from it But who has any right to find enjoy.",
+			"Invest with confidence. Our expert-managed mutual funds are designed to help you build wealth over the long term.",
 		link: "#",
 	},
 ];
@@ -46,20 +47,19 @@ const HeroContext: heroContext[] = [
 		image: "/images/hero01.jpg",
 		header: "An Innovative Framework For Your Financial Solutions",
 		paragraph:
-			"Weakness of will which is the same as thier duty through saying through shrinking from toil",
+			"Discover modern banking tools designed to simplify your financial life and help you reach your goals faster.",
 	},
 	{
 		image: "/images/hero02.jpg",
-		header: "Banking Made Easy ,More Secure & More Personal",
-
+		header: "Banking Made Easy, More Secure & More Personal",
 		paragraph:
-			"Weakness of will which is the same as thier duty through saying through shrinking from toil",
+			"Experience a smarter way to bank — secure, intuitive, and tailored to you. Your money, your control, your future.",
 	},
 	{
 		image: "/images/hero03.jpg",
 		header: "Bank With The Happiest Customers In The World",
 		paragraph:
-			"Weakness of will which is the same as thier duty through saying through shrinking from toil",
+			"Join a community that values trust, transparency, and personalized service. See why thousands choose us every day.",
 	},
 ];
 
@@ -143,19 +143,23 @@ function Hero() {
 							exit={{ y: 160 }}
 							transition={{ duration: 2 }}
 						>
-							<Button02 texts={"Make An Appointment"} />
+							<Button02 texts={"Open An Account"} />
 						</motion.span>
 					</motion.div>
 					<div className="flex gap-4 col-span-4 items-end relative z-20">
 						<div className="flex flex-col gap-2.5 text-center">
-							<Button01
-								texts="Make Payment"
-								className="bg-primary-600 hover:scale-95 transition-all duration-200 text-white/80"
-							/>
-							<Button01
-								texts="Make Enquiry"
-								className="bg-primary-500 hover:scale-95 transition-all duration-200 text-white/80"
-							/>
+							<Link href="/about/about-us">
+								<Button01
+									texts="Learn More"
+									className="bg-primary-600 hover:scale-95 transition-all duration-200 text-white/80"
+								/>
+							</Link>
+							<Link href="/get-in-touch">
+								<Button01
+									texts="Make Enquiry"
+									className="bg-primary-500 hover:scale-95 transition-all duration-200 text-white/80"
+								/>
+							</Link>
 						</div>
 						<div className="hidden md:flex gap-2.5">
 							<Button03

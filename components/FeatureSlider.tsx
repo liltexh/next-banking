@@ -8,25 +8,25 @@ const SLIDES = [
 		image: "/images/wealth-secure-1.jpg",
 		header: "Trade FX",
 		paragraph:
-			"Cases are paerfectly  fine when you have a life to beigin we all are gappy",
+			"Access competitive foreign exchange rates and trade globally with confidence. Manage currency conversions efficiently in real-time.",
 	},
 	{
 		image: "/images/wealth-secure-2.jpg",
 		header: "Multi Currency a/c",
 		paragraph:
-			"Cases are paerfectly  fine when you have a life to beigin we all are gappy",
+			"Hold and manage multiple currencies in a single account. Seamlessly transact across borders without the hassle of conversion delays.",
 	},
 	{
 		image: "/images/wealth-secure-3.jpg",
 		header: "Mutual Funds",
 		paragraph:
-			"Cases are paerfectly  fine when you have a life to beigin we all are gappy",
+			"Grow your wealth with expertly managed mutual funds tailored to your goals. Diversify and invest with professional insight.",
 	},
 	{
 		image: "/images/wealth-secure-4.jpg",
 		header: "Pension Schemes",
 		paragraph:
-			"Cases are paerfectly  fine when you have a life to beigin we all are gappy",
+			"Secure your retirement with structured pension plans. Start building a stable financial future with consistent contributions.",
 	},
 ];
 

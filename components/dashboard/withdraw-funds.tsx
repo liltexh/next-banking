@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/dashboard/ui/input";
@@ -14,13 +13,16 @@ import {
 	CardTitle,
 } from "@/components/dashboard/ui/card";
 import { TransferError } from "./TransferError";
+import { useUserStore } from "@/store/useUserStore";
 
 export function WithdrawFunds() {
 	const [amount, setAmount] = useState("");
 
+	const { account } = useUserStore();
+	const balance = account?.currentBalance ?? 0;
+
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		// Handle withdrawal logic here
 		console.log("Withdrawing:", amount);
 	};
 
@@ -61,12 +63,12 @@ export function WithdrawFunds() {
 										className="pl-8"
 										step="0.01"
 										min="0"
-										max="12847.32"
+										max={balance}
 										required
 									/>
 								</div>
 								<p className="text-sm text-slate-500 mt-1">
-									Available balance: $12,847.32
+									Available balance: ${balance.toFixed(2)}
 								</p>
 							</div>
 
@@ -81,7 +83,8 @@ export function WithdrawFunds() {
 					</CardContent>
 				</Card>
 			</div>
-			{/* 🔥 Show error message conditionally */}
+
+			{/* Error Component */}
 			<TransferError amount={amount} />
 		</>
 	);

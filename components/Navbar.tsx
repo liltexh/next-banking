@@ -122,7 +122,7 @@ function Navbar() {
 			<div className="hidden lg:flex bg-primary-500 py-4 pr-[10%] justify-end items-center text-lg text-white">
 				<p>
 					<span className="font-semibold">Updates: {"  "}</span>Get upto 4%* on
-					our Savings Account Balances with Finbank{" "}
+					our Savings Account Balances with GlobeTrust{" "}
 					<Link href="#">More Details</Link>
 				</p>
 			</div>

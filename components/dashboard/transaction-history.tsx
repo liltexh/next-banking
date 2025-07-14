@@ -37,6 +37,7 @@ export function TransactionHistory() {
 		switch (status) {
 			case "Completed":
 			case "Delivered":
+			case "delivered":
 				return (
 					<Badge className="bg-green-100 text-green-800 hover:bg-green-100">
 						{status}
@@ -44,6 +45,7 @@ export function TransactionHistory() {
 				);
 			case "Pending":
 			case "Scheduled":
+			case "pending":
 				return (
 					<Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100">
 						{status}

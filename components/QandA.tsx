@@ -8,31 +8,32 @@ type faq = {
 	heading: string;
 	context: string;
 };
+
 const FAQ: faq[] = [
 	{
-		heading: "What is the rate of interest?",
+		heading: "What is the interest rate on savings accounts?",
 		context:
-			"There anyone who loves or pursues desire rationally encounter consequences that are extremely painful again ...",
+			"Our savings accounts offer competitive interest rates that vary based on account type and balance. Please check our rates page or contact support for the most up-to-date figures.",
 	},
 	{
-		heading: "What is the rate of interest?",
+		heading: "How can I open a new account online?",
 		context:
-			"There anyone who loves or pursues desire rationally encounter consequences that are extremely painful again ...",
+			"You can open an account through our website or mobile app in just a few steps. You'll need a valid ID, proof of address, and a working email or phone number to get started.",
 	},
 	{
-		heading: "What is the rate of interest?",
+		heading: "Is my money safe with your bank?",
 		context:
-			"There anyone who loves or pursues desire rationally encounter consequences that are extremely painful again ...",
+			"Yes, your funds are secure. We are fully licensed and insured, and we use advanced encryption and security protocols to protect all transactions and data.",
 	},
 	{
-		heading: "What is the rate of interest?",
+		heading: "How do I transfer money to another account?",
 		context:
-			"There anyone who loves or pursues desire rationally encounter consequences that are extremely painful again ...",
+			"You can easily transfer funds via our mobile app or online banking platform. Go to 'Transfers', enter the recipient's details, amount, and confirm the transaction securely.",
 	},
 	{
-		heading: "What is the rate of interest?",
+		heading: "Are there any hidden fees I should know about?",
 		context:
-			"There anyone who loves or pursues desire rationally encounter consequences that are extremely painful again ...",
+			"We maintain transparent pricing. All fees, including ATM usage, maintenance, and international transactions, are clearly listed on our fees page. No hidden charges—ever.",
 	},
 ];
 
