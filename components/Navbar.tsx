@@ -25,7 +25,7 @@ const NAVIGATION_ROUTES: navigationRoute[] = [
 	{ name: "Banking", link: "/banking" },
 	{ name: "About", link: "/about/about-us" },
 	{ name: "Get In Touch", link: "/get-in-touch" },
-	{ name: "Lending", link: "#" },
+	// { name: "Lending", link: "#" },
 ];
 function Navbar() {
 	return (

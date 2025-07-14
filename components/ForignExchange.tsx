@@ -31,10 +31,10 @@ const ForignExchange = () => {
 						texts="Money Send & Recieve"
 						className="border-x border-t border-primary-600 text-primary-600 scale-110"
 					/>
-					<Button01
+					{/* <Button01
 						texts="Load & Redeem Forex Card"
 						className="border-x border-b border-white/30 text-white/60 scale-110"
-					/>
+					/> */}
 				</div>
 			</div>
 			<div className="flex flex-col lg:flex-row gap-4">

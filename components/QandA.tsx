@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Button02 from "./Button02";
 import { ArrowRight, Search } from "lucide-react";
+import Link from "next/link";
 
 type faq = {
 	heading: string;
@@ -49,7 +50,7 @@ const QandA = () => {
 						Find answers to all your queries about our service.
 					</p>
 				</div>
-				<div className="flex flex-col gap-4 justify-center items-center lg:items-start">
+				{/* <div className="flex flex-col gap-4 justify-center items-center lg:items-start">
 					<p className="text-lg font-semibold">Help You to Find</p>
 					<span className="flex p-4 gap-7 shadow-lg w-full outline-1 outline-black/5">
 						<input
@@ -61,7 +62,7 @@ const QandA = () => {
 							<Search />
 						</button>
 					</span>
-				</div>
+				</div> */}
 			</div>
 			<div className="flex flex-col lg:flex-row gap-10">
 				<div className="flex-1">
@@ -118,10 +119,12 @@ const QandA = () => {
 					Didn’t get, Click below button to more answers or{" "}
 					<span>contact us.</span>{" "}
 				</p>
-				<Button02
-					texts="Open Account"
-					className="shadow-md px-8"
-				/>
+				<Link href="/get-in-touch">
+					<Button02
+						texts="Contact Us"
+						className="shadow-md px-8"
+					/>
+				</Link>
 			</div>
 		</section>
 	);

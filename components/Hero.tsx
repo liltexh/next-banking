@@ -6,9 +6,8 @@ import Image from "next/image";
 import Button02 from "./Button02";
 import Button01 from "./Button01";
 import Button03 from "./Button03";
-import { BackIcon, FowrardIcon } from "./CostomIcons/CostomIcons";
 
-import { Plus } from "lucide-react";
+import { ArrowLeft, ArrowRight, Plus } from "lucide-react";
 type bankCategories = {
 	type: string;
 	heading: string;
@@ -165,7 +164,7 @@ function Hero() {
 									swapHeroImg("back");
 								}}
 							>
-								<BackIcon className="text-black w-10 group-hover:text-white" />
+								<ArrowLeft className="text-black w-10 group-hover:text-white" />
 							</Button03>
 							<Button03
 								className="group hover:bg-primary-500 transition-colors duration-500"
@@ -173,7 +172,7 @@ function Hero() {
 									swapHeroImg("next");
 								}}
 							>
-								<FowrardIcon className="text-black w-10 group-hover:text-white" />
+								<ArrowRight className="text-black w-10 group-hover:text-white" />
 							</Button03>
 						</div>
 					</div>
