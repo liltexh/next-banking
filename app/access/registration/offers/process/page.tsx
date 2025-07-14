@@ -31,8 +31,6 @@ const page = () => {
 	const [userBankInfo, setUserBankInfo] = useState({
 		currentBalance: 0.0,
 		lastTransaction: 0.0,
-		pendingTransfers: [0.0],
-		transactionHistory: [],
 	});
 
 	const [loading, setLoading] = useState(false);
@@ -72,7 +70,8 @@ const page = () => {
 		// This function will handle the user registration logic
 
 		try {
-			const { email, verifyEmail, password, verifyPassword } = userInfo;
+			const { email, verifyEmail, password, verifyPassword, Fname, Lname } =
+				userInfo;
 			if (
 				email &&
 				email == verifyEmail &&
@@ -95,6 +94,52 @@ const page = () => {
 						email,
 						accountNumber,
 						accountType,
+						transactionHistory: [
+							{
+								user: `${Fname} ${Lname}`,
+								action: "withdrew",
+								time: "22/03/2024",
+								amount: 50000,
+							},
+							{
+								user: `${Fname} ${Lname}`,
+								action: "deposited",
+								time: "22/03/2024",
+								amount: 50000,
+							},
+							{
+								user: `${Fname} ${Lname}`,
+								action: "transfered",
+								time: "22/03/2024",
+								amount: 50000,
+							},
+						],
+						pendingTransfers: [
+							{
+								recipient: `${Fname} ${Lname}`,
+								email: email,
+								amount: 500.0,
+								deliveryDate: "2024-01-20",
+								deliveryTime: "09:00",
+								status: "Scheduled",
+							},
+							{
+								recipient: `${Fname} ${Lname}`,
+								email: email,
+								amount: 500.0,
+								deliveryDate: "2024-01-20",
+								deliveryTime: "09:00",
+								status: "Delivered",
+							},
+							{
+								recipient: `${Fname} ${Lname}`,
+								email: email,
+								amount: 500.0,
+								deliveryDate: "2024-01-20",
+								deliveryTime: "09:00",
+								status: "Scheduled",
+							},
+						],
 					});
 
 					userDocAdded &&

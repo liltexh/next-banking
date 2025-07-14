@@ -16,7 +16,11 @@ import {
 	CardTitle,
 } from "@/components/dashboard/ui/card";
 import { Edit, X } from "lucide-react";
-
+import { useEffect, useState } from "react";
+import { useUserStore } from "@/store/useUserStore";
+interface scheduleType {
+	[key: string]: any;
+}
 const scheduledTransfers = [
 	{
 		id: "1",
@@ -57,6 +61,29 @@ const scheduledTransfers = [
 ];
 
 export function ScheduledTransfers() {
+	const [scheduledDetails, setScheduledDetails] = useState<scheduleType>();
+	const { account: adminAccount, loading } = useUserStore();
+	useEffect(() => {
+		const getAccountDetails = () => {
+			if (loading) {
+				console.log("this code is loading");
+				return; // or return a loading spinner
+			}
+			console.log("i am tired very very tired");
+			if (!adminAccount) {
+				console.log("No userAccount found, check database");
+				// Redirect logic can be added here if needed
+			} else {
+				if (adminAccount?.isAdmin) {
+					setScheduledDetails(adminAccount?.allPendingTransfers);
+				}
+				console.log("this is all admin account", adminAccount);
+			}
+		};
+
+		getAccountDetails();
+		// Cleanup function is not needed here, so return undefined
+	}, [adminAccount, loading]);
 	const getStatusBadge = (status: string) => {
 		return status === "Scheduled" ? (
 			<Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100">
@@ -94,7 +121,7 @@ export function ScheduledTransfers() {
 				</CardHeader>
 				<CardContent>
 					<Table>
-						<TableHeader>
+						<TableHeader className="max-sm:hidden">
 							<TableRow>
 								<TableHead>Recipient</TableHead>
 								<TableHead className="text-right">Amount</TableHead>
@@ -104,8 +131,11 @@ export function ScheduledTransfers() {
 							</TableRow>
 						</TableHeader>
 						<TableBody>
-							{scheduledTransfers.map((transfer) => (
-								<TableRow key={transfer.id}>
+							{scheduledDetails?.map((transfer: any, idx: number) => (
+								<TableRow
+									key={idx}
+									className="max-sm:flex max-sm:flex-col justify-center items-start"
+								>
 									<TableCell>
 										<div>
 											<p className="font-medium text-slate-800">
@@ -120,6 +150,7 @@ export function ScheduledTransfers() {
 											minimumFractionDigits: 2,
 										})}
 									</TableCell>
+
 									<TableCell>
 										{formatDateTime(
 											transfer.deliveryDate,
@@ -127,17 +158,18 @@ export function ScheduledTransfers() {
 										)}
 									</TableCell>
 									<TableCell>{getStatusBadge(transfer.status)}</TableCell>
+
 									<TableCell>
 										<div className="flex gap-2">
 											{transfer.status === "Scheduled" && (
 												<>
-													<Button
+													{/* <Button
 														variant="outline"
 														size="sm"
 													>
 														<Edit className="w-4 h-4 mr-1" />
 														Edit
-													</Button>
+													</Button> */}
 													<Button
 														variant="outline"
 														size="sm"

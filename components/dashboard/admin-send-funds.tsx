@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/dashboard/ui/input";
 import { Label } from "@/components/dashboard/ui/label";
@@ -22,6 +22,13 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/dashboard/ui/select";
+import { useUserStore } from "@/store/useUserStore";
+import { useUpdateUserDocument } from "@/hooks/useUpdateUserDocument/useUpdateUserDocument";
+import { arrayUnion } from "firebase/firestore";
+
+interface allUsers {
+	[key: string]: any;
+}
 
 const users = [
 	{ id: "1", name: "John Doe", email: "john.doe@email.com" },
@@ -38,18 +45,65 @@ export function AdminSendFunds() {
 	const [isScheduled, setIsScheduled] = useState(false);
 	const [scheduleDate, setScheduleDate] = useState("");
 	const [scheduleTime, setScheduleTime] = useState("");
+	const [allUsers, setAllUsers] = useState<allUsers>([]);
+	const { update: updateAUserDocument, loading: updateLoading } =
+		useUpdateUserDocument();
+	const { account: adminAccount, loading } = useUserStore();
+	useEffect(() => {
+		const getAccountDetails = () => {
+			if (loading) {
+				console.log("this code is loading");
+				return; // or return a loading spinner
+			}
+			console.log("i am tired very very tired");
+			if (!adminAccount) {
+				console.log("No userAccount found, check database");
+				// Redirect logic can be added here if needed
+			} else {
+				if (adminAccount?.isAdmin) {
+					setAllUsers(adminAccount?.allAccounts);
+				}
+				console.log("this is the admin account i am telling you", adminAccount);
+				console.log("this is all admin account", allUsers);
+			}
+		};
 
-	const handleSubmit = (e: React.FormEvent) => {
+		getAccountDetails();
+		// Cleanup function is not needed here, so return undefined
+	}, [adminAccount, loading]);
+
+	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		// Handle admin send funds logic here
-		console.log("Admin sending funds:", {
-			selectedUser,
-			amount,
-			note,
-			isScheduled,
-			scheduleDate,
-			scheduleTime,
-		});
+		const userInfo = allUsers.find((user: any) => user.email == selectedUser);
+		if (!userInfo) {
+			console.error("User not found in allUsers");
+			return;
+		}
+		try {
+			const userSceduledAmountUpdate = {
+				recipient: userInfo?.name || "",
+				email: selectedUser,
+				amount,
+				note,
+				status: isScheduled ? "scheduled" : "delivered",
+				deliveryDate: scheduleDate,
+				deliveryTime: scheduleTime,
+			};
+			await updateAUserDocument("accounts", selectedUser, {
+				pendingTransfers: arrayUnion(userSceduledAmountUpdate),
+			});
+			console.log("Admin sending funds succesfull:", {
+				selectedUser,
+				amount,
+				note,
+				isScheduled,
+				scheduleDate,
+				scheduleTime,
+			});
+		} catch (error) {
+			console.log("error", error);
+		}
 	};
 
 	return (
@@ -81,10 +135,10 @@ export function AdminSendFunds() {
 									<SelectValue placeholder="Choose a user..." />
 								</SelectTrigger>
 								<SelectContent>
-									{users.map((user) => (
+									{allUsers.map((user: any) => (
 										<SelectItem
-											key={user.id}
-											value={user.id}
+											key={user.userId}
+											value={user.email}
 										>
 											{user.name} ({user.email})
 										</SelectItem>
@@ -161,9 +215,9 @@ export function AdminSendFunds() {
 						<Button
 							type="submit"
 							className="w-full bg-red-600 hover:bg-red-700"
-							disabled={!selectedUser || !amount}
+							disabled={!selectedUser || !amount || updateLoading}
 						>
-							{isScheduled ? "Schedule Transfer" : "Send Funds Now"}
+							{isScheduled ? "Schedule Transfer" : "Send Funds"}
 						</Button>
 					</form>
 				</CardContent>

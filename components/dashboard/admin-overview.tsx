@@ -1,7 +1,31 @@
 import { SummaryCard } from "@/components/dashboard/summary-card";
+import { useUserStore } from "@/store/useUserStore";
 import { Users, DollarSign, Clock, Calendar } from "lucide-react";
-
+import { useEffect, useState } from "react";
+type adminType = {
+	[key: string]: any;
+};
 export function AdminOverview() {
+	const [adminDetails, setAdminDetails] = useState<adminType>();
+	const { account: adminAccount, loading } = useUserStore();
+	useEffect(() => {
+		const getAccountDetails = () => {
+			if (loading) {
+				return; // or return a loading spinner
+			}
+			if (!adminAccount) {
+				console.log("No userAccount found, check database");
+				// Redirect logic can be added here if needed
+			} else {
+				if (adminAccount?.isAdmin) {
+					setAdminDetails(adminAccount);
+				}
+			}
+		};
+
+		getAccountDetails();
+		// Cleanup function is not needed here, so return undefined
+	}, [adminAccount, loading]);
 	return (
 		<div className="space-y-6">
 			<div>
@@ -14,7 +38,7 @@ export function AdminOverview() {
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 				<SummaryCard
 					title="Total Users"
-					value="1,247"
+					value={adminDetails?.totalAccounts}
 					icon={<Users className="w-6 h-6 text-blue-600" />}
 					trend="+12 this month"
 					trendUp={true}
@@ -22,25 +46,25 @@ export function AdminOverview() {
 
 				<SummaryCard
 					title="Total Holdings"
-					value="$2.4M"
+					value={`$ ${adminDetails?.totalHoldings}`}
 					icon={<DollarSign className="w-6 h-6 text-green-600" />}
 					trend="+5.2% from last month"
 					trendUp={true}
 				/>
 
-				<SummaryCard
+				{/* <SummaryCard
 					title="Active Transfers"
 					value="23"
 					icon={<Clock className="w-6 h-6 text-yellow-600" />}
 					trend="Processing now"
 					trendUp={null}
-				/>
+				/> */}
 
 				<SummaryCard
 					title="Scheduled Transfers"
-					value="156"
+					value={adminDetails?.totalPendingTransfers}
 					icon={<Calendar className="w-6 h-6 text-purple-600" />}
-					trend="Next 30 days"
+					trend="Last 30 days"
 					trendUp={null}
 				/>
 			</div>
@@ -51,39 +75,24 @@ export function AdminOverview() {
 						Recent User Activity
 					</h3>
 					<div className="space-y-4">
-						{[
-							{
-								user: "John Doe",
-								action: "Deposited $500.00",
-								time: "2 minutes ago",
-							},
-							{
-								user: "Jane Smith",
-								action: "Withdrew $200.00",
-								time: "15 minutes ago",
-							},
-							{
-								user: "Mike Johnson",
-								action: "Sent $150.00",
-								time: "1 hour ago",
-							},
-							{
-								user: "Sarah Wilson",
-								action: "Deposited $1,200.00",
-								time: "2 hours ago",
-							},
-						].map((activity, index) => (
-							<div
-								key={index}
-								className="flex items-center justify-between py-3 border-b border-gray-100 last:border-b-0"
-							>
-								<div>
-									<p className="font-medium text-slate-800">{activity.user}</p>
-									<p className="text-sm text-slate-600">{activity.action}</p>
+						{adminDetails?.allTransactionHistories.map(
+							(activity: any, index: number) => (
+								<div
+									key={index}
+									className="flex items-center justify-between py-3 border-b border-gray-100 last:border-b-0"
+								>
+									<div>
+										<p className="font-medium text-slate-800">
+											{activity.user}
+										</p>
+										<p className="text-sm text-slate-600">
+											{activity.action} <span>{activity.amount}</span>
+										</p>
+									</div>
+									<p className="text-sm text-slate-500">{activity.time}</p>
 								</div>
-								<p className="text-sm text-slate-500">{activity.time}</p>
-							</div>
-						))}
+							)
+						)}
 					</div>
 				</div>
 
@@ -134,3 +143,26 @@ export function AdminOverview() {
 		</div>
 	);
 }
+
+// [
+// 	{
+// 		user: "John Doe",
+// 		action: "Deposited $500.00",
+// 		time: "2 minutes ago",
+// 	},
+// 	{
+// 		user: "Jane Smith",
+// 		action: "Withdrew $200.00",
+// 		time: "15 minutes ago",
+// 	},
+// 	{
+// 		user: "Mike Johnson",
+// 		action: "Sent $150.00",
+// 		time: "1 hour ago",
+// 	},
+// 	{
+// 		user: "Sarah Wilson",
+// 		action: "Deposited $1,200.00",
+// 		time: "2 hours ago",
+// 	},
+// ];

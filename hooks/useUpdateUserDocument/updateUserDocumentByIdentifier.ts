@@ -19,6 +19,10 @@ export const updateUserDocumentByIdentifier = async (
 		where("email", "==", identifier)
 	);
 
+	if (q) {
+		console.log("Query for email is valid", q);
+	}
+
 	const q2 = query(
 		collection(db, collectionName),
 		where("accountNumber", "==", identifier)

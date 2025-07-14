@@ -9,13 +9,13 @@ import {
 import { useEffect, useState } from "react";
 
 type accountType = {
-	accountNumber: number;
-	accountType: string;
-	currentBalance: number;
-	lastTransaction: number;
-	pendingTransfers: number[];
-	totalPending: number;
-	amountOfPending: number;
+	accountNumber?: number;
+	accountType?: string;
+	currentBalance?: number;
+	lastTransaction?: number;
+	pendingTransfers?: number[];
+	totalPending?: number;
+	amountOfPending?: number;
 	[key: string]: any;
 	// Add other user properties as needed
 };
@@ -23,6 +23,7 @@ type accountType = {
 export function DashboardOverview() {
 	const [accountDetails, setAccountDetails] = useState<accountType>();
 	const { account: userAccount, loading } = useUserStore();
+
 	const handlePendingTransfers = (transfers: number[]) => {
 		const totalSum = transfers.reduce((acc, curr) => acc + curr, 0);
 		const totalCount = transfers.length;
@@ -38,10 +39,12 @@ export function DashboardOverview() {
 				console.log("No userAccount found, check database");
 				// Redirect logic can be added here if needed
 			} else {
-				const { pendingTransfers } = userAccount;
-				const [totalPending, amountOfPending] =
-					handlePendingTransfers(pendingTransfers);
-				setAccountDetails({ ...userAccount, totalPending, amountOfPending });
+				if (!userAccount?.isAdmin) {
+					const pendingTransfers = userAccount?.pendingTransfers || [];
+					const [totalPending, amountOfPending] =
+						handlePendingTransfers(pendingTransfers);
+					setAccountDetails({ ...userAccount, totalPending, amountOfPending });
+				}
 			}
 		};
 

@@ -2,6 +2,7 @@ import { auth } from "@/lib/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { create } from "zustand";
 import { getFirestoreDocument } from "../lib/firebaseUtils/getFirestoreDocument";
+import { getAllAccountsSummary } from "@/lib/firebaseUtils/getAccountsSummary";
 
 interface FirestoreUserData {
 	userId?: string;
@@ -34,14 +35,31 @@ type UserStoreData = BaseUserData & {
 	otherInfo: OtherInfo;
 };
 
-interface AccountData extends FirestoreUserAccount {}
+interface AccountData extends FirestoreUserAccount {
+	isAdmin: boolean;
+}
+
+interface AdminData {
+	isAdmin: boolean;
+	[key: string]: any;
+}
 
 interface UserStore {
 	user: UserStoreData | null;
-	account: AccountData | null;
+	account: AccountData | AdminData | null;
 	//add the account type also
 	loading: boolean;
 	listenToAuth: () => void;
+}
+
+interface AccountType {
+	allAccounts: any;
+	totalAccounts: number;
+	totalHoldings: number;
+	totalPendingTransfers: number;
+	allPendingTransfers: any;
+	allTransactionHistories: any;
+	nonAdminAccounts: any;
 }
 
 // create the store
@@ -63,6 +81,7 @@ export const useUserStore = create<UserStore>((set) => ({
 					firebaseUser.uid,
 					"accounts"
 				);
+				const adminAccountDoc = await getAllAccountsSummary();
 				const userData: UserStoreData = {
 					userId: userDoc?.userId || firebaseUser.uid,
 					name: userDoc?.Fname || firebaseUser.displayName || "", // fallback if null
@@ -78,9 +97,31 @@ export const useUserStore = create<UserStore>((set) => ({
 					lastTransaction: userAccountDoc?.lastTransaction || 0,
 					pendingTransfers: userAccountDoc?.pendingTransfers || [],
 					transactionHistory: userAccountDoc?.transactionHistory || [],
+					isAdmin: false,
+				};
+
+				const AdminAccountData = {
+					allAccounts: adminAccountDoc?.allAccounts || [],
+					totalAccounts: adminAccountDoc?.totalAccounts || 0,
+					totalHoldings: adminAccountDoc?.totalHoldings || 0,
+					totalPendingTransfers: adminAccountDoc?.totalPendingTransfers || 0,
+					allPendingTransfers: adminAccountDoc?.allPendingTransfers || [],
+					allTransactionHistories:
+						adminAccountDoc?.allTransactionHistories || [],
+					nonAdminAccounts: adminAccountDoc?.nonAdminAccounts || [],
+
+					isAdmin: true,
 				};
 				console.log("this is the zustend store user data", userData);
-				set({ user: userData, account: userAccountData, loading: false });
+				console.log(
+					"this is zustand registering the all pending transfers",
+					AdminAccountData?.allPendingTransfers
+				);
+				set({
+					user: userData,
+					account: !userData.isAdmin ? userAccountData : AdminAccountData,
+					loading: false,
+				});
 			} else {
 				console.log("no user was found so  user is returning null");
 				set({ user: null, account: null, loading: false });
