@@ -75,7 +75,7 @@ function Navbar() {
 					</SheetTrigger>
 					<SheetContent
 						side="left"
-						className="bg-primary-500 p-4 border-r border-black text-white w-[60%]"
+						className="bg-primary-500 p-4 border-r border-black text-white w-[64%]"
 					>
 						<VisuallyHidden>
 							<SheetTitle>navigation</SheetTitle>
