@@ -1,5 +1,5 @@
 import SubNav from "@/components/SubNav";
-import React from "react";
+import React, { Suspense } from "react";
 
 function layout({
 	children,
@@ -7,10 +7,12 @@ function layout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<div className="py-0">
-			<SubNav />
-			{children}
-		</div>
+		<Suspense fallback={<div>Loading page...</div>}>
+			<div className="py-0">
+				<SubNav />
+				{children}
+			</div>
+		</Suspense>
 	);
 }
 
