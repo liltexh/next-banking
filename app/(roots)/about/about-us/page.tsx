@@ -157,13 +157,16 @@ const Page = () => {
 							Known for Trust, Honesty & Customer Support
 						</h3>
 						<p>
-							Belongs to those who fail in their duty through weakness of will,
-							which is the same as saying through shrinking from toil and pain.
-							These cases are perfectly simple and easy to distinguish.
+							Our Company is known for its , support, and commitment to
+							customer, fast responce and security has been a pinnacle for
+							growth.
 						</p>
 						<p>
-							Choice is untrammelled and when nothing prevents our being able to
-							do what we like best every pleasure is to be welcomed.
+							the choices we make to build a better future for our customers and
+							communities. We believe in the power of banking to transform
+							lives, and we are dedicated to providing innovative solutions that
+							empower individuals and businesses to achieve their financial
+							goals.
 						</p>
 					</div>
 					<div className="w-full flex justify-start flex-col lg:flex-row gap-12">
