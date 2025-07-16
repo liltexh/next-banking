@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { useState } from "react";
 import { Button } from "@/components/dashboard/ui/button";
 import { Input } from "@/components/dashboard/ui/input";
@@ -28,6 +27,7 @@ export function SignIn({ onSignIn }: SignInProps) {
 	const [errors, setErrors] = useState<{ email?: string; password?: string }>(
 		{}
 	);
+	const [authError, setAuthError] = useState<string | null>(null);
 
 	const validateForm = () => {
 		const newErrors: { email?: string; password?: string } = {};
@@ -55,12 +55,19 @@ export function SignIn({ onSignIn }: SignInProps) {
 
 		setIsLoading(true);
 
-		// Simulate API call
 		setTimeout(() => {
 			setIsLoading(false);
+
+			// Example failure condition
+			if (email === "fail@test.com" || password !== "123456") {
+				setAuthError("Invalid email or password.");
+				return;
+			}
+
 			if (onSignIn) {
 				onSignIn(email, password);
 			}
+
 			console.log("Sign in attempt:", { email, password });
 		}, 1500);
 	};
@@ -68,7 +75,6 @@ export function SignIn({ onSignIn }: SignInProps) {
 	return (
 		<div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
 			<div className="w-full max-w-md">
-				{/* Bank Logo and Header */}
 				<div className="text-center mb-8">
 					<div className="flex items-center justify-center gap-3 mb-4">
 						<div className="w-12 h-12 bg-red-600 rounded-lg flex items-center justify-center">
@@ -81,7 +87,6 @@ export function SignIn({ onSignIn }: SignInProps) {
 					</div>
 				</div>
 
-				{/* Sign In Card */}
 				<Card className="shadow-lg border-0">
 					<CardHeader className="space-y-1 pb-6">
 						<CardTitle className="text-2xl font-semibold text-slate-800 text-center">
@@ -97,7 +102,6 @@ export function SignIn({ onSignIn }: SignInProps) {
 							onSubmit={handleSubmit}
 							className="space-y-4"
 						>
-							{/* Email Input */}
 							<div className="space-y-2">
 								<Label
 									htmlFor="email"
@@ -130,7 +134,6 @@ export function SignIn({ onSignIn }: SignInProps) {
 								)}
 							</div>
 
-							{/* Password Input */}
 							<div className="space-y-2">
 								<Label
 									htmlFor="password"
@@ -175,7 +178,6 @@ export function SignIn({ onSignIn }: SignInProps) {
 								)}
 							</div>
 
-							{/* Remember Me and Forgot Password */}
 							<div className="flex items-center justify-between pt-2">
 								<label className="flex items-center space-x-2 cursor-pointer">
 									<input
@@ -194,7 +196,6 @@ export function SignIn({ onSignIn }: SignInProps) {
 								</button>
 							</div>
 
-							{/* Sign In Button */}
 							<Button
 								type="submit"
 								className="w-full h-12 bg-red-600 hover:bg-red-700 text-white font-semibold text-base mt-6"
@@ -211,7 +212,6 @@ export function SignIn({ onSignIn }: SignInProps) {
 							</Button>
 						</form>
 
-						{/* Additional Links */}
 						<div className="mt-6 pt-6 border-t border-gray-200">
 							<div className="text-center space-y-3">
 								<p className="text-sm text-slate-600">
@@ -222,19 +222,6 @@ export function SignIn({ onSignIn }: SignInProps) {
 										</button>
 									</Link>
 								</p>
-								{/* <div className="flex items-center justify-center gap-4 text-sm">
-									<button className="text-slate-600 hover:text-slate-800">
-										Security Center
-									</button>
-									<span className="text-slate-300">|</span>
-									<button className="text-slate-600 hover:text-slate-800">
-										Privacy
-									</button>
-									<span className="text-slate-300">|</span>
-									<button className="text-slate-600 hover:text-slate-800">
-										Help
-									</button>
-								</div> */}
 							</div>
 						</div>
 					</CardContent>
@@ -265,6 +252,24 @@ export function SignIn({ onSignIn }: SignInProps) {
 					<p className="mt-1">Member FDIC. Equal Housing Lender.</p>
 				</div>
 			</div>
+
+			{/* Error Popup */}
+			{authError && (
+				<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 bg-opacity-50">
+					<div className="bg-white p-6 rounded-lg shadow-xl w-[90%] max-w-sm text-center">
+						<h2 className="text-lg font-semibold text-red-600 mb-2">
+							Sign-in Error
+						</h2>
+						<p className="text-sm text-slate-700 mb-4">{authError}</p>
+						<Button
+							onClick={() => setAuthError(null)}
+							className="bg-red-600 hover:bg-red-700 text-white w-full"
+						>
+							Close
+						</Button>
+					</div>
+				</div>
+			)}
 		</div>
 	);
 }
