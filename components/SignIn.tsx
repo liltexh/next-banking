@@ -16,14 +16,15 @@ import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 import Link from "next/link";
 
 interface SignInProps {
-	onSignIn?: (email: string, password: string) => void;
+	LogInUser?: (email: string, password: string) => void;
+	isLoading?: boolean;
 }
 
-export function SignIn({ onSignIn }: SignInProps) {
+export function SignIn({ LogInUser, isLoading }: SignInProps) {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [showPassword, setShowPassword] = useState(false);
-	const [isLoading, setIsLoading] = useState(false);
+	// const [isLoading, setIsLoading] = useState(false);
 	const [errors, setErrors] = useState<{ email?: string; password?: string }>(
 		{}
 	);
@@ -53,23 +54,11 @@ export function SignIn({ onSignIn }: SignInProps) {
 
 		if (!validateForm()) return;
 
-		setIsLoading(true);
+		if (LogInUser) {
+			LogInUser(email, password);
+		}
 
-		setTimeout(() => {
-			setIsLoading(false);
-
-			// Example failure condition
-			if (email === "fail@test.com" || password !== "123456") {
-				setAuthError("Invalid email or password.");
-				return;
-			}
-
-			if (onSignIn) {
-				onSignIn(email, password);
-			}
-
-			console.log("Sign in attempt:", { email, password });
-		}, 1500);
+		console.log("Sign in attempt:", { email, password });
 	};
 
 	return (

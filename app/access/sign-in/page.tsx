@@ -14,9 +14,11 @@ export default function SignInPage() {
 			if (user) {
 				console.log("Sign in successful:", { email, password });
 				router.push("/dashboard");
+			} else {
+				throw new Error("Sign in failed. Please check your credentials.");
 			}
 		} catch (error) {
-			console.log("error while signing in");
+			console.log("error while signing in", error);
 		}
 		// In a real app, you would:
 		// 1. Validate credentials with your backend
@@ -24,5 +26,10 @@ export default function SignInPage() {
 		// 3. Redirect to dashboard
 	};
 
-	return <SignIn onSignIn={handleSignIn} />;
+	return (
+		<SignIn
+			LogInUser={handleSignIn}
+			isLoading={loading}
+		/>
+	);
 }

@@ -3,11 +3,9 @@
 import { useState, useEffect } from "react";
 import { UserDashboard } from "@/components/dashboard/user-dashboard";
 import { AdminDashboard } from "@/components/dashboard/admin-dashboard";
-import { Button } from "@/components/ui/button";
-import { auth } from "@/lib/firebase"; // Adjust the import based on your Firebase setup
-import { onAuthStateChanged } from "firebase/auth";
+
 import { useRouter } from "next/navigation"; // ✅ App Router version
-import { useFirestoreDocument } from "@/hooks/useFirestoreDocument/useFirestoreDocument";
+
 import { useUserStore } from "@/store/useUserStore";
 import LoadingAnimation01 from "@/components/LoadingAnimation01";
 
@@ -23,11 +21,9 @@ export default function Home() {
 
 	useEffect(() => {
 		const checkUser = () => {
-			if (loading) {
-				return; // or return a loading spinner
-			}
+			if (loading) return; // Wait until auth check is complete
 			if (!user) {
-				router.push("/");
+				router.push("/access/sign-in");
 				console.log(
 					"from the dashboard page no user found, redirecting to login"
 				);
@@ -59,28 +55,7 @@ export default function Home() {
 
 	return (
 		<div className="min-h-screen bg-gray-50">
-			{/* Demo Toggle - Remove in production 
-			 <div className="fixed bottom-4 right-4 z-50 bg-white p-2 rounded-lg shadow-md border">
-				<div className="flex gap-2">
-					<Button
-						variant={dashboardType === "user" ? "default" : "outline"}
-						size="sm"
-						onClick={() => setDashboardType("user")}
-						className="bg-red-600 hover:bg-red-700"
-					>
-						User Dashboard
-					</Button>
-					<Button
-						variant={dashboardType === "admin" ? "default" : "outline"}
-						size="sm"
-						onClick={() => setDashboardType("admin")}
-						className="bg-red-600 hover:bg-red-700"
-					>
-						Admin Dashboard
-					</Button>
-				</div>
-			</div> */}
-
+			{/* Render the appropriate dashboard based on user type */}
 			{dashboardType === "user" ? <UserDashboard /> : <AdminDashboard />}
 		</div>
 	);
