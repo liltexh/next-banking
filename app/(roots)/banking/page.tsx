@@ -32,7 +32,7 @@ const ACCOUNT_OPTIONS: accountOption[] = [
 		maintainanceFee: "0",
 		beneficts: "Earn interest on your savings, no monthly fees.",
 		intrest: 1.5,
-		link: "access/registration/offers/process?type=savings",
+		link: "access/registration/process?type=savings",
 		image: "images/account-1.jpg",
 	},
 	{
@@ -43,7 +43,7 @@ const ACCOUNT_OPTIONS: accountOption[] = [
 		maintainanceFee: "10",
 		beneficts: "Unlimited transactions, debit card access.",
 		intrest: 0,
-		link: "access/registration/offers/process?type=checkings",
+		link: "access/registration/process?type=checkings",
 		image: "images/account-2.jpg",
 	},
 	{
@@ -54,7 +54,7 @@ const ACCOUNT_OPTIONS: accountOption[] = [
 		maintainanceFee: "0",
 		beneficts: "Higher interest rates than regular savings accounts.",
 		intrest: 2.5,
-		link: "access/registration/offers/process?type=fixed",
+		link: "access/registration/process?type=fixed",
 		image: "images/account-3.jpg",
 	},
 	{
@@ -66,7 +66,7 @@ const ACCOUNT_OPTIONS: accountOption[] = [
 		maintainanceFee: "5",
 		beneficts: "Manage shared expenses easily.",
 		intrest: 0.5,
-		link: "access/registration/offers/process?type=joint",
+		link: "access/registration/process?type=joint",
 		image: "/images/statements-3.jpg",
 	},
 	{
@@ -77,7 +77,7 @@ const ACCOUNT_OPTIONS: accountOption[] = [
 		maintainanceFee: "20",
 		beneficts: "Business transactions, payroll services.",
 		intrest: 0.1,
-		link: "access/registration/offers/process?type=corporate",
+		link: "access/registration/process?type=corporate",
 		image: "/images/statements-1.jpg",
 	},
 	{
@@ -88,7 +88,7 @@ const ACCOUNT_OPTIONS: accountOption[] = [
 		maintainanceFee: "15",
 		beneficts: "Access to stock markets and investment opportunities.",
 		intrest: 0,
-		link: "access/registration/offers/process?type=brokerage",
+		link: "access/registration/process?type=brokerage",
 		image: "/images/statements-2.jpg",
 	},
 ];

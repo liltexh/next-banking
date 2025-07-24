@@ -177,9 +177,11 @@ const Page = () => {
 									key={idx}
 								>
 									<span className="relative">
-										<img
+										<Image
 											src={b.image}
 											alt=""
+											width={100}
+											height={100}
 											className="w-full h-full object-cover "
 										/>
 										<p className="absolute bottom-4 -right-6 bg-white text-primary-500 shadow-md p-4 px-8">
@@ -225,11 +227,11 @@ const Page = () => {
 						/>
 						<img
 							src="/images/statements-2.jpg"
-							alt=" w-full h-full"
+							alt=""
 						/>
 						<img
 							src="/images/statements-3.jpg"
-							alt=" w-full h-full"
+							alt=""
 						/>
 					</div>
 					<div className="flex-1 flex flex-col gap-6 p-14 text-white bg-gradient-to-r from-primary-600 to-primary-500 w-full h-full">

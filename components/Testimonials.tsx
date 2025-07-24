@@ -1,5 +1,6 @@
 import { Star } from "lucide-react";
 import { number } from "motion/react";
+import Image from "next/image";
 import React from "react";
 type tst = {
 	star: number;
@@ -105,11 +106,12 @@ function Testimonials() {
 								<p>{tst.context}</p>
 							</div>
 							<div className="flex w-full gap-2 justify-start items-center">
-								<span className="w-14 aspect-square rounded-full overflow-hidden">
-									<img
+								<span className="relative w-14 aspect-square rounded-full overflow-hidden bg-white/40">
+									<Image
 										src={tst.profile}
-										alt=""
-										className="w-full h-full object-cover"
+										alt="profile"
+										fill
+										className="object-cover"
 									/>
 								</span>
 								<span>
