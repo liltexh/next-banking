@@ -3,6 +3,7 @@ import { ArrowRight, PersonStandingIcon } from "lucide-react";
 import Link from "next/link";
 import SubHero from "@/components/SubHero";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 type accountOption = {
 	header: string;
@@ -182,10 +183,12 @@ const page = () => {
 				</div>
 			</section>
 			<section className="flex flex-col lg:flex-row gap-y-12 bg-black text-white">
-				<div className="flex-1">
-					<img
+				<div className="flex-1 relative">
+					<Image
 						src="/images/skyscrapper.png"
 						alt=""
+						width={160}
+						height={160}
 						className="w-full h-full object-contain"
 					/>
 				</div>
