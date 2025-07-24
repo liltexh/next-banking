@@ -105,7 +105,7 @@ const STEPS_TO_ACCOUNT: steps[] = [
 		icon: "/icons/id-verification.svg",
 		heading: "Verify Your Identity",
 		context:
-			"Upload a valid government-issued ID and a recent utility bill or bank statement to confirm your identity and address.",
+			"Upload a valid government-issued ID and a recent utility bill or bank statements to confirm your identity and address.",
 		bgColor: "#008080", //"teal", //
 	},
 	{
