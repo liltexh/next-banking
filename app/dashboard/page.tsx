@@ -30,7 +30,7 @@ export default function Home() {
 			}
 			console.log("a user was found", user);
 			if (user?.isAdmin) {
-				console.log("he is an admin");
+				console.log("he is an admin", user);
 				setDashboardType("admin");
 			} else {
 				console.log("he is not admin");
