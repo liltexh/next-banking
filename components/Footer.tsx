@@ -287,7 +287,7 @@ export default function BankingFooter() {
 			</div>
 
 			{/* Important Disclaimers */}
-			<div className="bg-foreground border-t border-gray-800">
+			<div className="bg- border-t border-gray-800">
 				<div className="container mx-auto px-4 py-3">
 					<p className="text-xs text-gray-500 text-center leading-relaxed">
 						*Annual Percentage Yield (APY) accurate as of{" "}
