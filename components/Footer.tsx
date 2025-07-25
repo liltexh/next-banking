@@ -3,7 +3,7 @@ import { Phone, Mail, MapPin, Shield, Lock, CreditCard } from "lucide-react";
 
 export default function BankingFooter() {
 	return (
-		<footer className="bg-slate-900 text-white">
+		<footer className="bg-foreground text-white">
 			{/* Main Footer Content */}
 			<div className="container mx-auto px-4 py-12">
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -287,7 +287,7 @@ export default function BankingFooter() {
 			</div>
 
 			{/* Important Disclaimers */}
-			<div className="bg-gray-900 border-t border-gray-800">
+			<div className="bg-foreground border-t border-gray-800">
 				<div className="container mx-auto px-4 py-3">
 					<p className="text-xs text-gray-500 text-center leading-relaxed">
 						*Annual Percentage Yield (APY) accurate as of{" "}
